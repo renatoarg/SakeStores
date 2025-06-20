@@ -1,4 +1,4 @@
-package com.sakestores.android.ui.screens.list
+package com.sakestores.feat_sake_list.presentation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

@@ -23,4 +23,5 @@ rootProject.name = "SakeStores"
 include(":app")
 include(":domain")
 include(":data")
-include(":presentation")
+include(":feat-sake-list")
+include(":feat-sake-details")

@@ -1,4 +1,4 @@
-package com.sakestores.android.ui.screens.details
+package com.sakestores.feat_sake_details.presentation
 
 import com.sakestores.domain.model.SakeShop
 

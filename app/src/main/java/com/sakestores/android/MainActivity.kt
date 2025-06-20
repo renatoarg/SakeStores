@@ -5,11 +5,21 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.sakestores.android.ui.navigation.SakeStoresNavigation
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.sakestores.android.ui.theme.SakeStoresTheme
+import com.sakestores.feat_sake_details.ui.SakeShopDetailsScreen
+import com.sakestores.feat_sake_list.ui.SakeShopsListScreen
 import dagger.hilt.android.AndroidEntryPoint
+import java.net.URLDecoder
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -19,9 +29,42 @@ class MainActivity : ComponentActivity() {
         setContent {
             SakeStoresTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    SakeStoresNavigation()
+                    SakeStoresApp(modifier = Modifier.padding(innerPadding))
                 }
             }
+        }
+    }
+}
+
+@Composable
+fun SakeStoresApp(
+    modifier: Modifier = Modifier,
+    navController: NavHostController = rememberNavController()
+) {
+    NavHost(
+        navController = navController,
+        startDestination = "sake_shops_list",
+        modifier = modifier
+    ) {
+        composable("sake_shops_list") {
+            SakeShopsListScreen(
+                onSakeShopClick = { shopName ->
+                    val encodedShopName = URLEncoder.encode(shopName, StandardCharsets.UTF_8.toString())
+                    navController.navigate("sake_shop_details/$encodedShopName")
+                }
+            )
+        }
+
+        composable("sake_shop_details/{shopName}") { backStackEntry ->
+            val encodedShopName = backStackEntry.arguments?.getString("shopName") ?: ""
+            val shopName = URLDecoder.decode(encodedShopName, StandardCharsets.UTF_8.toString())
+
+            SakeShopDetailsScreen(
+                shopName = shopName,
+                onBackClick = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }

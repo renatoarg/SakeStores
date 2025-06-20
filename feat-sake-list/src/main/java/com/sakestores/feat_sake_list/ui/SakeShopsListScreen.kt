@@ -1,4 +1,4 @@
-package com.sakestores.android.ui.screens.list
+package com.sakestores.feat_sake_list.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -49,7 +48,7 @@ import com.sakestores.domain.model.SakeShop
 @Composable
 fun SakeShopsListScreen(
     onSakeShopClick: (String) -> Unit,
-    viewModel: SakeShopsListViewModel = hiltViewModel()
+    viewModel: com.sakestores.feat_sake_list.presentation.SakeShopsListViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
 
