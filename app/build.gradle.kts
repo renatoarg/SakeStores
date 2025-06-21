@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.google.devtools.ksp)
     alias(libs.plugins.dagger.hilt.android)
     id("kotlin-parcelize")
+    id("jacoco")
 }
 
 android {
@@ -34,12 +35,7 @@ android {
         debug {
             enableUnitTestCoverage = true
             enableAndroidTestCoverage = true
-        }
-    }
-
-    testOptions {
-        unitTests {
-            isIncludeAndroidResources = true
+            isTestCoverageEnabled = true
         }
     }
 
@@ -64,6 +60,13 @@ android {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
+    }
+}
+
+tasks.withType<Test> {
+    configure<JacocoTaskExtension> {
+        isIncludeNoLocationClasses = true
+        excludes = listOf("jdk.internal.*")
     }
 }
 

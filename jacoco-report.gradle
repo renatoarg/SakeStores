@@ -1,0 +1,101 @@
+apply plugin: 'jacoco'
+
+jacoco {
+    toolVersion = "0.8.8"
+}
+
+def coverageSourceDirs = [
+        'data/src/main/java',
+        'data/src/main/kotlin',
+        'domain/src/main/java',
+        'domain/src/main/kotlin',
+        'feat-sake-list/src/main/java',
+        'feat-sake-list/src/main/kotlin',
+        'feat-sake-details/src/main/java',
+        'feat-sake-details/src/main/kotlin',
+        'app/src/main/java',
+        'app/src/main/kotlin'
+]
+
+def coverageClassDirs = fileTree(
+        dir: '.',
+        includes: [
+                'data/build/tmp/kotlin-classes/debug/**/*.class',
+                'domain/build/classes/kotlin/main/**/*.class',
+                'feat-sake-list/build/tmp/kotlin-classes/debug/**/*.class',
+                'feat-sake-details/build/tmp/kotlin-classes/debug/**/*.class',
+                'app/build/tmp/kotlin-classes/debug/**/*.class'
+        ],
+        excludes: [
+                '**/R.class',
+                '**/R$*.class',
+                '**/BuildConfig.*',
+                '**/Manifest*.*',
+                '**/*Test*.*',
+                '**/*$ViewInjector*.*',
+                '**/*$ViewBinder*.*',
+                '**/Lambda$*.class',
+                '**/Lambda.class',
+                '**/*Lambda.class',
+                '**/*Lambda*.class',
+                '**/Dagger*Component*.class',
+                '**/*Module_*Factory.class',
+                '**/di/module/*',
+                '**/*_Factory.*',
+                '**/*Module.*',
+                '**/*Dagger*.*',
+                '**/*Hilt*.*',
+                '**/*ComposableSingletons*.*',
+                '**/*_HiltModules*.*'
+        ]
+)
+
+def coverageExecutionData = fileTree(
+        dir: '.',
+        includes: [
+                'data/build/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec',
+                'domain/build/jacoco/test.exec',
+                'feat-sake-list/build/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec',
+                'feat-sake-details/build/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec',
+                'app/build/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec'
+        ]
+)
+
+task jacocoFullReport(type: JacocoReport, group: 'verification') {
+    description = 'Generate Jacoco coverage reports for all modules.'
+
+    dependsOn = [
+            ':data:testDebugUnitTest',
+            ':domain:test',
+            ':feat-sake-list:testDebugUnitTest',
+            ':feat-sake-details:testDebugUnitTest',
+            ':app:testDebugUnitTest'
+    ]
+
+    reports {
+        xml.required = true
+        html.required = true
+        csv.required = false
+    }
+
+    sourceDirectories.setFrom(files(coverageSourceDirs))
+    classDirectories.setFrom(coverageClassDirs)
+    executionData.setFrom(coverageExecutionData)
+
+    doLast {
+        println "JaCoCo report generated:"
+        println "HTML: ${reports.html.outputLocation}/index.html"
+        println "XML: ${reports.xml.outputLocation}"
+    }
+}
+
+task testAllModules {
+    description = 'Run tests for all modules'
+    dependsOn = [
+            ':data:test',
+            ':domain:test',
+            ':feat-sake-list:test',
+            ':feat-sake-details:test',
+            ':app:test'
+    ]
+}

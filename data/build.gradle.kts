@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.google.devtools.ksp)
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.kotlin.serialization)
+    id("jacoco")
 }
 
 android {
@@ -27,6 +28,7 @@ android {
         }
         debug {
             enableUnitTestCoverage = true
+            isTestCoverageEnabled = true
         }
     }
     compileOptions {
@@ -36,6 +38,13 @@ android {
 
     kotlinOptions {
         jvmTarget = "17"
+    }
+}
+
+tasks.withType<Test> {
+    configure<JacocoTaskExtension> {
+        isIncludeNoLocationClasses = true
+        excludes = listOf("jdk.internal.*")
     }
 }
 

@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.google.devtools.ksp)
     alias(libs.plugins.dagger.hilt.android)
+    id("jacoco")
 }
 
 android {
@@ -26,6 +27,7 @@ android {
         }
         debug {
             enableUnitTestCoverage = true
+            isTestCoverageEnabled = true
         }
     }
     compileOptions {
@@ -40,6 +42,13 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.5"
+    }
+}
+
+tasks.withType<Test> {
+    configure<JacocoTaskExtension> {
+        isIncludeNoLocationClasses = true
+        excludes = listOf("jdk.internal.*")
     }
 }
 
