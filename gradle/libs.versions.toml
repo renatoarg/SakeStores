@@ -1,6 +1,7 @@
 [versions]
 agp = "8.2.0"
 coreTesting = "2.2.0"
+hiltAndroidTesting = "2.48"
 kotlin = "1.9.20"
 coreKtx = "1.12.0"
 junit = "4.13.2"
@@ -12,6 +13,7 @@ composeBom = "2023.10.01"
 lifecycleViewmodelCompose = "2.7.0"
 hilt = "2.48"
 hiltNavigationCompose = "1.1.0"
+navigationTesting = "2.7.7"
 retrofit = "2.9.0"
 okhttp = "4.12.0"
 ksp = "1.9.20-1.0.14"
@@ -28,17 +30,18 @@ mockk = "1.13.8"
 coroutinesTest = "1.9.0"
 turbine = "1.1.0"
 composeAnimation = "1.7.1"
+uiTestJunit4 = "1.6.7"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 
 
-androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
-androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
 androidx-compose-animation = { group = "androidx.compose.animation", name = "animation", version.ref = "composeAnimation" }
+
 
 androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
@@ -50,6 +53,7 @@ androidx-material3 = { group = "androidx.compose.material3", name = "material3" 
 
 # hilt
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 hilt-core = { group = "com.google.dagger", name = "hilt-core", version.ref = "hilt" }
 # inject
@@ -85,8 +89,16 @@ mockk = { group = "io.mockk", name = "mockk", version.ref = "mockk" }
 kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "coroutines" }
 # arch code (live data)
 androidx-core-testing = { module = "androidx.arch.core:core-testing", version.ref = "coreTesting" }
-
-turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+# compose testing - ui - test - juni
+ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "uiTestJunit4" }
+# compose testing - navigation
+androidx-navigation-testing = { module = "androidx.navigation:navigation-testing", version.ref = "navigationTesting" }
+# compose testing - junit ext
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
+# expresso core
+androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
+# hilt testing
+hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", version.ref = "hiltAndroidTesting" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
