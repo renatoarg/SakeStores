@@ -1,6 +1,11 @@
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.sakestores.feat_sake_details.ui
 
 import android.content.Intent
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,7 +18,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -43,14 +47,14 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.sakestores.domain.model.SakeShop
-import androidx.core.net.toUri
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SakeShopDetailsScreen(
+fun SharedTransitionScope.SakeShopDetailsScreen(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     shopName: String,
     onBackClick: () -> Unit,
     viewModel: com.sakestores.feat_sake_details.presentation.SakeShopDetailsViewModel = hiltViewModel()
@@ -62,25 +66,7 @@ fun SakeShopDetailsScreen(
         viewModel.loadSakeShopDetails(shopName)
     }
 
-    Scaffold(
-        topBar = {
-            TopAppBar(
-                title = { Text("Shop Details") },
-                navigationIcon = {
-                    IconButton(onClick = onBackClick) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "Back"
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
-                )
-            )
-        }
-    ) { paddingValues ->
+    Scaffold() { paddingValues ->
         when {
             uiState.isLoading -> {
                 Box(
@@ -117,7 +103,6 @@ fun SakeShopDetailsScreen(
             uiState.sakeShop != null -> {
                 SakeShopDetailsContent(
                     sakeShop = uiState.sakeShop!!,
-                    modifier = Modifier.padding(paddingValues),
                     onMapsClick = { mapsLink ->
                         val intent = Intent(Intent.ACTION_VIEW, mapsLink.toUri())
                         context.startActivity(intent)
@@ -125,7 +110,8 @@ fun SakeShopDetailsScreen(
                     onWebsiteClick = { website ->
                         val intent = Intent(Intent.ACTION_VIEW, website.toUri())
                         context.startActivity(intent)
-                    }
+                    },
+                    animatedVisibilityScope = animatedVisibilityScope
                 )
             }
 
@@ -144,24 +130,22 @@ fun SakeShopDetailsScreen(
 }
 
 @Composable
-private fun SakeShopDetailsContent(
+private fun SharedTransitionScope.SakeShopDetailsContent(
     sakeShop: SakeShop,
     modifier: Modifier = Modifier,
     onMapsClick: (String) -> Unit,
-    onWebsiteClick: (String) -> Unit
+    onWebsiteClick: (String) -> Unit,
+    animatedVisibilityScope: AnimatedVisibilityScope
 ) {
     Column(
         modifier = modifier
             .fillMaxSize()
-            .verticalScroll(rememberScrollState())
-            .padding(16.dp),
+            .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(16.dp)
     ) {
         // Image Card
-        Card(
-            modifier = Modifier.fillMaxWidth(),
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-            shape = RoundedCornerShape(12.dp)
+        Column(
+            modifier = Modifier.fillMaxWidth()
         ) {
             AsyncImage(
                 model = sakeShop.picture,
@@ -169,8 +153,24 @@ private fun SakeShopDetailsContent(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
+                    .sharedElement(
+                        state = rememberSharedContentState("image/${sakeShop.name}"),
+                        animatedVisibilityScope = animatedVisibilityScope
+                    )
                     .background(MaterialTheme.colorScheme.surfaceVariant),
                 contentScale = ContentScale.Crop
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = sakeShop.name,
+                style = MaterialTheme.typography.titleLarge,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier
+                    .padding(16.dp)
+                    .sharedElement(
+                        state = rememberSharedContentState("text/${sakeShop.name}"),
+                        animatedVisibilityScope = animatedVisibilityScope
+                    )
             )
         }
 
@@ -178,17 +178,11 @@ private fun SakeShopDetailsContent(
         Card(
             modifier = Modifier.fillMaxWidth(),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-            shape = RoundedCornerShape(12.dp)
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                Text(
-                    text = sakeShop.name,
-                    style = MaterialTheme.typography.headlineSmall,
-                    fontWeight = FontWeight.Bold
-                )
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
@@ -219,7 +213,6 @@ private fun SakeShopDetailsContent(
         Card(
             modifier = Modifier.fillMaxWidth(),
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-            shape = RoundedCornerShape(12.dp)
         ) {
             Column(
                 modifier = Modifier.padding(16.dp),

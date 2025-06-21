@@ -1,9 +1,13 @@
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.sakestores.android
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
@@ -41,30 +45,34 @@ fun SakeStoresApp(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController()
 ) {
-    NavHost(
-        navController = navController,
-        startDestination = "sake_shops_list",
-        modifier = modifier
-    ) {
-        composable("sake_shops_list") {
-            SakeShopsListScreen(
-                onSakeShopClick = { shopName ->
-                    val encodedShopName = URLEncoder.encode(shopName, StandardCharsets.UTF_8.toString())
-                    navController.navigate("sake_shop_details/$encodedShopName")
-                }
-            )
-        }
+    SharedTransitionLayout {
+        NavHost(
+            navController = navController,
+            startDestination = "sake_shops_list",
+            modifier = modifier
+        ) {
+            composable("sake_shops_list") {
+                SakeShopsListScreen(
+                    animatedVisibilityScope = this,
+                    onSakeShopClick = { shopName ->
+                        val encodedShopName = URLEncoder.encode(shopName, StandardCharsets.UTF_8.toString())
+                        navController.navigate("sake_shop_details/$encodedShopName")
+                    }
+                )
+            }
 
-        composable("sake_shop_details/{shopName}") { backStackEntry ->
-            val encodedShopName = backStackEntry.arguments?.getString("shopName") ?: ""
-            val shopName = URLDecoder.decode(encodedShopName, StandardCharsets.UTF_8.toString())
+            composable("sake_shop_details/{shopName}") { backStackEntry ->
+                val encodedShopName = backStackEntry.arguments?.getString("shopName") ?: ""
+                val shopName = URLDecoder.decode(encodedShopName, StandardCharsets.UTF_8.toString())
 
-            SakeShopDetailsScreen(
-                shopName = shopName,
-                onBackClick = {
-                    navController.popBackStack()
-                }
-            )
+                SakeShopDetailsScreen(
+                    animatedVisibilityScope = this,
+                    shopName = shopName,
+                    onBackClick = {
+                        navController.popBackStack()
+                    }
+                )
+            }
         }
     }
 }

@@ -1,5 +1,10 @@
+@file:OptIn(ExperimentalSharedTransitionApi::class)
+
 package com.sakestores.feat_sake_list.ui
 
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +27,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -46,7 +52,8 @@ import com.sakestores.domain.model.SakeShop
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SakeShopsListScreen(
+fun SharedTransitionScope.SakeShopsListScreen(
+    animatedVisibilityScope: AnimatedVisibilityScope,
     onSakeShopClick: (String) -> Unit,
     viewModel: com.sakestores.feat_sake_list.presentation.SakeShopsListViewModel = hiltViewModel()
 ) {
@@ -106,8 +113,9 @@ fun SakeShopsListScreen(
                 ) {
                     items(uiState.sakeShops) { sakeShop ->
                         SakeShopCard(
+                            animatedVisibilityScope = animatedVisibilityScope,
                             sakeShop = sakeShop,
-                            onClick = { onSakeShopClick(sakeShop.name) }
+                            onClick = { onSakeShopClick(sakeShop.name) },
                         )
                     }
                 }
@@ -117,44 +125,51 @@ fun SakeShopsListScreen(
 }
 
 @Composable
-private fun SakeShopCard(
+private fun SharedTransitionScope.SakeShopCard(
     sakeShop: SakeShop,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    animatedVisibilityScope: AnimatedVisibilityScope
 ) {
-    Card(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .clickable { onClick() },
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        shape = RoundedCornerShape(12.dp)
     ) {
+        Text(
+            text = sakeShop.name,
+            style = MaterialTheme.typography.titleLarge,
+            fontWeight = FontWeight.Bold,
+            maxLines = 2,
+            overflow = TextOverflow.Ellipsis,
+            modifier = Modifier
+                .sharedElement(
+                    state = rememberSharedContentState("text/${sakeShop.name}"),
+                    animatedVisibilityScope = animatedVisibilityScope
+                )
+        )
+        AsyncImage(
+            model = sakeShop.picture,
+            contentDescription = sakeShop.name,
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(80.dp)
+                .sharedElement(
+                    state = rememberSharedContentState("image/${sakeShop.name}"),
+                    animatedVisibilityScope = animatedVisibilityScope
+                )
+                .background(MaterialTheme.colorScheme.surfaceVariant),
+            contentScale = ContentScale.Crop
+        )
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(16.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            AsyncImage(
-                model = sakeShop.picture,
-                contentDescription = sakeShop.name,
-                modifier = Modifier
-                    .size(80.dp)
-                    .clip(RoundedCornerShape(8.dp))
-                    .background(MaterialTheme.colorScheme.surfaceVariant),
-                contentScale = ContentScale.Crop
-            )
-
             Column(
                 modifier = Modifier.weight(1f),
                 verticalArrangement = Arrangement.spacedBy(4.dp)
             ) {
-                Text(
-                    text = sakeShop.name,
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    maxLines = 2,
-                    overflow = TextOverflow.Ellipsis
-                )
 
                 Text(
                     text = sakeShop.description,
@@ -182,5 +197,8 @@ private fun SakeShopCard(
                 }
             }
         }
+        Divider(
+            modifier = Modifier.fillMaxWidth().height(1.dp)
+        )
     }
 }

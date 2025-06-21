@@ -78,6 +78,7 @@ dependencies {
 
     // Navigation
     implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.compose.animation)
 
     // ViewModel
     implementation(libs.androidx.lifecycle.viewmodel.compose)
