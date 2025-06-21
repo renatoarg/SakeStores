@@ -27,7 +27,7 @@ class GetSakeShopsUseCaseTest {
         // Given
         val expectedShops = listOf(
             SakeShop(
-                name = "Test Shop 1",
+                name = "Test Shopsss 1",
                 description = "Test Description 1",
                 picture = "test_url_1",
                 rating = 4.0f,

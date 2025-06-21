@@ -63,4 +63,10 @@ dependencies {
 
     // Animation
     implementation(libs.androidx.compose.animation)
+
+    // Testing
+    testImplementation(libs.junit)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.androidx.core.testing)
 }
