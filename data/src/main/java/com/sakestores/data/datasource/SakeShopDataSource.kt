@@ -4,7 +4,6 @@ import com.google.gson.Gson
 import android.content.Context
 import com.google.gson.reflect.TypeToken
 import com.sakestores.data.dto.SakeShopDto
-import com.sakestores.domain.model.SakeShop
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
