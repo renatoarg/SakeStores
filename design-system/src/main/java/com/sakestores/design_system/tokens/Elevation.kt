@@ -2,6 +2,17 @@ package com.sakestores.design_system.tokens
 
 import androidx.compose.ui.unit.dp
 
+/**
+ * Defines elevation values used throughout the Sake Stores design system.
+ *
+ * Elevation values are represented as [dp] units and correspond to
+ * different shadow depths for UI elements, helping to establish
+ * visual hierarchy and layering.
+ *
+ * Includes predefined sizes from none (0.dp) to xxxl (24.dp),
+ * and semantic aliases for common UI components such as cards,
+ * floating action buttons, app bars, and modals.
+ */
 object SakeElevation {
     val none = 0.dp
     val xs = 1.dp

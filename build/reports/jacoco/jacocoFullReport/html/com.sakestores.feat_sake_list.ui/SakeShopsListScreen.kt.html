@@ -33,18 +33,30 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
+/**
+ * Screen composable displaying a list of sake shops with support for shared element
+ * transitions and different UI states: loading, error, and success.
+ *
+ * The screen uses a [Scaffold] with a top app bar titled &quot;Sake Stores&quot;. Depending on the
+ * [uiState] from the [viewModel], it shows a loading indicator, an error message with
+ * retry button, or the list of sake shops.
+ *
+ * @param animatedVisibilityScope The [AnimatedVisibilityScope] used to coordinate shared element animations.
+ * @param onSakeShopClick Callback invoked when a sake shop item is clicked, providing the sake shop's name.
+ * @param viewModel The [SakeShopsListViewModel] instance providing UI state. Defaults to a Hilt-injected ViewModel.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SharedTransitionScope.SakeShopsListScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
     onSakeShopClick: (String) -&gt; Unit,
-<span class="nc" id="L41">    viewModel: com.sakestores.feat_sake_list.presentation.SakeShopsListViewModel = hiltViewModel()</span>
-<span class="nc bnc" id="L42" title="All 2 branches missed.">) {</span>
-<span class="nc" id="L43">    val uiState by viewModel.uiState.collectAsState()</span>
+<span class="nc" id="L53">    viewModel: com.sakestores.feat_sake_list.presentation.SakeShopsListViewModel = hiltViewModel()</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">) {</span>
+<span class="nc" id="L55">    val uiState by viewModel.uiState.collectAsState()</span>
 
-<span class="nc bnc" id="L45" title="All 4 branches missed.">    Scaffold(</span>
-<span class="nc" id="L46">        modifier = Modifier.testTag(&quot;main_screen&quot;),</span>
-<span class="nc" id="L47">        contentWindowInsets = WindowInsets(0),</span>
+<span class="nc bnc" id="L57" title="All 4 branches missed.">    Scaffold(</span>
+<span class="nc" id="L58">        modifier = Modifier.testTag(&quot;main_screen&quot;),</span>
+<span class="nc" id="L59">        contentWindowInsets = WindowInsets(0),</span>
         topBar = {
             TopAppBar(
                 title = { Text(&quot;Sake Stores&quot;) },
@@ -54,67 +66,65 @@ fun SharedTransitionScope.SakeShopsListScreen(
                 )
             )
         }
-<span class="nc" id="L57">    ) { paddingValues -&gt;</span>
-<span class="nc bnc" id="L58" title="All 6 branches missed.">        when {</span>
+<span class="nc" id="L69">    ) { paddingValues -&gt;</span>
+<span class="nc bnc" id="L70" title="All 6 branches missed.">        when {</span>
             // loading
-<span class="nc bnc" id="L60" title="All 2 branches missed.">            uiState.isLoading -&gt; {</span>
-<span class="nc" id="L61">                Box(</span>
-<span class="nc" id="L62">                    modifier = Modifier</span>
-<span class="nc" id="L63">                        .fillMaxSize()</span>
-<span class="nc" id="L64">                        .padding(paddingValues)</span>
-<span class="nc" id="L65">                        .testTag(&quot;loading_state&quot;),</span>
-<span class="nc" id="L66">                    contentAlignment = Alignment.Center</span>
-                ) {
-<span class="nc" id="L68">                    CircularProgressIndicator()</span>
-<span class="nc" id="L69">                }</span>
-            }
-            // error
-<span class="nc bnc" id="L72" title="All 2 branches missed.">            uiState.errorMessage != null -&gt; {</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">            uiState.isLoading -&gt; {</span>
 <span class="nc" id="L73">                Box(</span>
 <span class="nc" id="L74">                    modifier = Modifier</span>
 <span class="nc" id="L75">                        .fillMaxSize()</span>
 <span class="nc" id="L76">                        .padding(paddingValues)</span>
-<span class="nc" id="L77">                        .testTag(&quot;error_state&quot;),</span>
+<span class="nc" id="L77">                        .testTag(&quot;loading_state&quot;),</span>
 <span class="nc" id="L78">                    contentAlignment = Alignment.Center</span>
                 ) {
-<span class="nc" id="L80">                    Column(horizontalAlignment = Alignment.CenterHorizontally) {</span>
-<span class="nc" id="L81">                        Text(</span>
-<span class="nc" id="L82">                            text = &quot;Error: ${uiState.errorMessage}&quot;,</span>
-<span class="nc" id="L83">                            color = MaterialTheme.colorScheme.error,</span>
-<span class="nc" id="L84">                            style = MaterialTheme.typography.bodyLarge,</span>
-<span class="nc" id="L85">                            modifier = Modifier.testTag(&quot;error_message&quot;)</span>
+<span class="nc" id="L80">                    CircularProgressIndicator()</span>
+<span class="nc" id="L81">                }</span>
+            }
+            // error
+<span class="nc bnc" id="L84" title="All 2 branches missed.">            uiState.errorMessage != null -&gt; {</span>
+<span class="nc" id="L85">                Box(</span>
+<span class="nc" id="L86">                    modifier = Modifier</span>
+<span class="nc" id="L87">                        .fillMaxSize()</span>
+<span class="nc" id="L88">                        .padding(paddingValues)</span>
+<span class="nc" id="L89">                        .testTag(&quot;error_state&quot;),</span>
+<span class="nc" id="L90">                    contentAlignment = Alignment.Center</span>
+                ) {
+<span class="nc" id="L92">                    Column(horizontalAlignment = Alignment.CenterHorizontally) {</span>
+<span class="nc" id="L93">                        Text(</span>
+<span class="nc" id="L94">                            text = &quot;Error: ${uiState.errorMessage}&quot;,</span>
+<span class="nc" id="L95">                            color = MaterialTheme.colorScheme.error,</span>
+<span class="nc" id="L96">                            style = MaterialTheme.typography.bodyLarge,</span>
+<span class="nc" id="L97">                            modifier = Modifier.testTag(&quot;error_message&quot;)</span>
                         )
-<span class="nc" id="L87">                        Spacer(modifier = Modifier.height(16.dp))</span>
-<span class="nc" id="L88">                        Button(</span>
-<span class="nc" id="L89">                            onClick = { viewModel.loadSakeShops() },</span>
-<span class="nc" id="L90">                            modifier = Modifier.testTag(&quot;retry_button&quot;)</span>
+<span class="nc" id="L99">                        Spacer(modifier = Modifier.height(16.dp))</span>
+<span class="nc" id="L100">                        Button(</span>
+<span class="nc" id="L101">                            onClick = { viewModel.loadSakeShops() },</span>
+<span class="nc" id="L102">                            modifier = Modifier.testTag(&quot;retry_button&quot;)</span>
                         ) {
                             Text(&quot;Retry&quot;)
                         }
-<span class="nc" id="L94">                    }</span>
-<span class="nc" id="L95">                }</span>
+<span class="nc" id="L106">                    }</span>
+<span class="nc" id="L107">                }</span>
             }
             // success
-<span class="nc bnc" id="L98" title="All 2 branches missed.">            else -&gt; {</span>
-<span class="nc" id="L99">                LazyColumn(</span>
-<span class="nc" id="L100">                    modifier = Modifier</span>
-<span class="nc" id="L101">                        .fillMaxSize()</span>
-<span class="nc" id="L102">                        .padding(paddingValues)</span>
-<span class="nc" id="L103">                        .testTag(&quot;success_state&quot;),</span>
-<span class="nc" id="L104">                    contentPadding = PaddingValues(top = 16.dp),</span>
-<span class="nc" id="L105">                    verticalArrangement = Arrangement.spacedBy(12.dp)</span>
+<span class="nc bnc" id="L110" title="All 2 branches missed.">            else -&gt; {</span>
+<span class="nc" id="L111">                LazyColumn(</span>
+<span class="nc" id="L112">                    modifier = Modifier</span>
+<span class="nc" id="L113">                        .fillMaxSize()</span>
+<span class="nc" id="L114">                        .padding(paddingValues)</span>
+<span class="nc" id="L115">                        .testTag(&quot;success_state&quot;)</span>
                 ) {
-<span class="nc" id="L107">                    items(uiState.sakeShops) { sakeShop -&gt;</span>
+<span class="nc" id="L117">                    items(uiState.sakeShops) { sakeShop -&gt;</span>
                         SakeShopCard(
                             animatedVisibilityScope = animatedVisibilityScope,
                             sakeShop = sakeShop,
-<span class="nc" id="L111">                            onClick = { onSakeShopClick(sakeShop.name) },</span>
+<span class="nc" id="L121">                            onClick = { onSakeShopClick(sakeShop.name) },</span>
                             modifier = Modifier.testTag(&quot;shop_item&quot;)
                         )
                     }
-<span class="nc" id="L115">                }</span>
+<span class="nc" id="L125">                }</span>
             }
-<span class="nc" id="L117">        }</span>
-<span class="nc" id="L118">    }</span>
-<span class="nc" id="L119">}</span>
+<span class="nc" id="L127">        }</span>
+<span class="nc" id="L128">    }</span>
+<span class="nc" id="L129">}</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

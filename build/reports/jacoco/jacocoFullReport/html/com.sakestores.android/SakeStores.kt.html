@@ -14,41 +14,57 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
+/**
+ * Root composable that sets up navigation and shared transitions for the Sake Stores app.
+ *
+ * This function defines the navigation graph using [NavHost], allowing users to navigate between:
+ * - [SakeShopsListScreen]: A list of local sake shops.
+ * - [SakeShopDetailsScreen]: A details view for a selected shop.
+ *
+ * It also uses [SharedTransitionLayout] from Jetpack Compose to enable animated transitions
+ * between composable destinations.
+ *
+ * Navigation arguments (like the shop name) are URL-encoded to support safe passing of string values.
+ *
+ * @param modifier A [Modifier] for styling or layout purposes. Defaults to [Modifier].
+ * @param navController The navigation controller used to manage composable destinations.
+ * Defaults to a new instance created with [rememberNavController].
+ */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SakeStores(
-<span class="nc bnc" id="L20" title="All 2 branches missed.">    modifier: Modifier = Modifier,</span>
-<span class="nc bnc" id="L21" title="All 4 branches missed.">    navController: NavHostController = rememberNavController()</span>
-<span class="nc bnc" id="L22" title="All 20 branches missed.">) {</span>
-<span class="nc bnc" id="L23" title="All 2 branches missed.">    SharedTransitionLayout {</span>
-<span class="nc bnc" id="L24" title="All 8 branches missed.">        NavHost(</span>
-<span class="nc" id="L25">            navController = navController,</span>
-<span class="nc" id="L26">            startDestination = &quot;sake_shops_list&quot;,</span>
-<span class="nc" id="L27">            modifier = modifier</span>
+<span class="nc bnc" id="L36" title="All 2 branches missed.">    modifier: Modifier = Modifier,</span>
+<span class="nc bnc" id="L37" title="All 4 branches missed.">    navController: NavHostController = rememberNavController()</span>
+<span class="nc bnc" id="L38" title="All 20 branches missed.">) {</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">    SharedTransitionLayout {</span>
+<span class="nc bnc" id="L40" title="All 8 branches missed.">        NavHost(</span>
+<span class="nc" id="L41">            navController = navController,</span>
+<span class="nc" id="L42">            startDestination = &quot;sake_shops_list&quot;,</span>
+<span class="nc" id="L43">            modifier = modifier</span>
         ) {
-<span class="nc" id="L29">            composable(&quot;sake_shops_list&quot;) {</span>
-<span class="nc bnc" id="L30" title="All 2 branches missed.">                SakeShopsListScreen(</span>
-<span class="nc" id="L31">                    animatedVisibilityScope = this,</span>
+<span class="nc" id="L45">            composable(&quot;sake_shops_list&quot;) {</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">                SakeShopsListScreen(</span>
+<span class="nc" id="L47">                    animatedVisibilityScope = this,</span>
                     onSakeShopClick = { shopName -&gt;
-<span class="nc" id="L33">                        val encodedShopName = URLEncoder.encode(shopName, StandardCharsets.UTF_8.toString())</span>
-<span class="nc" id="L34">                        navController.navigate(&quot;sake_shop_details/$encodedShopName&quot;)</span>
-<span class="nc" id="L35">                    }</span>
+<span class="nc" id="L49">                        val encodedShopName = URLEncoder.encode(shopName, StandardCharsets.UTF_8.toString())</span>
+<span class="nc" id="L50">                        navController.navigate(&quot;sake_shop_details/$encodedShopName&quot;)</span>
+<span class="nc" id="L51">                    }</span>
                 )
-<span class="nc" id="L37">            }</span>
+<span class="nc" id="L53">            }</span>
 
-<span class="nc" id="L39">            composable(&quot;sake_shop_details/{shopName}&quot;) { backStackEntry -&gt;</span>
-<span class="nc bnc" id="L40" title="All 4 branches missed.">                val encodedShopName = backStackEntry.arguments?.getString(&quot;shopName&quot;) ?: &quot;&quot;</span>
-<span class="nc" id="L41">                val shopName = URLDecoder.decode(encodedShopName, StandardCharsets.UTF_8.toString())</span>
+<span class="nc" id="L55">            composable(&quot;sake_shop_details/{shopName}&quot;) { backStackEntry -&gt;</span>
+<span class="nc bnc" id="L56" title="All 4 branches missed.">                val encodedShopName = backStackEntry.arguments?.getString(&quot;shopName&quot;) ?: &quot;&quot;</span>
+<span class="nc" id="L57">                val shopName = URLDecoder.decode(encodedShopName, StandardCharsets.UTF_8.toString())</span>
 
-<span class="nc bnc" id="L43" title="All 2 branches missed.">                SakeShopDetailsScreen(</span>
-<span class="nc" id="L44">                    animatedVisibilityScope = this,</span>
-<span class="nc" id="L45">                    shopName = shopName,</span>
+<span class="nc bnc" id="L59" title="All 2 branches missed.">                SakeShopDetailsScreen(</span>
+<span class="nc" id="L60">                    animatedVisibilityScope = this,</span>
+<span class="nc" id="L61">                    shopName = shopName,</span>
                     onBackClick = {
-<span class="nc" id="L47">                        navController.popBackStack()</span>
-<span class="nc" id="L48">                    }</span>
+<span class="nc" id="L63">                        navController.popBackStack()</span>
+<span class="nc" id="L64">                    }</span>
                 )
-<span class="nc" id="L50">            }</span>
-<span class="nc" id="L51">        }</span>
-<span class="nc" id="L52">    }</span>
-<span class="nc bnc" id="L53" title="All 2 branches missed.">}</span>
+<span class="nc" id="L66">            }</span>
+<span class="nc" id="L67">        }</span>
+<span class="nc" id="L68">    }</span>
+<span class="nc bnc" id="L69" title="All 2 branches missed.">}</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

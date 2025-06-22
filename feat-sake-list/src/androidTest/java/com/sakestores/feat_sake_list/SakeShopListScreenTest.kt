@@ -12,15 +12,20 @@ import androidx.compose.ui.test.assertIsDisplayed
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import com.sakestores.feat_sake_list.ui.SakeShopCard
-import androidx.compose.foundation.lazy.itemsIndexed
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * UI tests for the SakeShop list screen and card components.
+ */
 class SakeShopListScreenTest {
 
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    /**
+     * Verifies that the top bar title "Sake Stores" is displayed.
+     */
     @Test
     fun screen_showsTopBarTitle() {
         composeTestRule.setContent {
@@ -35,6 +40,9 @@ class SakeShopListScreenTest {
             .assertIsDisplayed()
     }
 
+    /**
+     * Verifies that the main screen has the test tag "main_screen".
+     */
     @Test
     fun screen_hasMainScreenTag() {
         composeTestRule.setContent {
@@ -49,12 +57,15 @@ class SakeShopListScreenTest {
             .assertIsDisplayed()
     }
 
+    /**
+     * Tests if the SakeShopCard renders correctly with valid content.
+     */
     @Test
     fun sakeShopCard_rendersCorrectly() {
         val sampleShop = com.sakestores.domain.model.SakeShop(
             name = "Test Sake Shop",
             description = "A great sake shop for testing",
-            picture = "", // ✅ URL vazia para evitar carregamento
+            picture = "",
             address = "Test Address",
             coordinates = listOf(0.0, 0.0),
             googleMapsLink = "https://maps.google.com",
@@ -95,6 +106,9 @@ class SakeShopListScreenTest {
         assert(clickCalled) { "Click callback não foi chamado" }
     }
 
+    /**
+     * Tests if clicking the SakeShopCard triggers the correct callback.
+     */
     @Test
     fun sakeShopCard_clickInteraction() {
         val sampleShop = com.sakestores.domain.model.SakeShop(
@@ -133,6 +147,9 @@ class SakeShopListScreenTest {
         }
     }
 
+    /**
+     * Ensures that long texts in the SakeShopCard are handled gracefully by the UI.
+     */
     @Test
     fun sakeShopCard_handlesLongText() {
         val shopWithLongText = com.sakestores.domain.model.SakeShop(
@@ -169,6 +186,9 @@ class SakeShopListScreenTest {
             .assertIsDisplayed()
     }
 
+    /**
+     * Verifies that multiple SakeShopCard components are rendered correctly in a LazyColumn.
+     */
     @Test
     fun multipleCards_renderCorrectly() {
         val sakeShops = listOf(

@@ -4,6 +4,13 @@ import com.sakestores.data.dto.SakeShopDto
 import org.junit.Test
 import org.junit.Assert.*
 
+/**
+ * Unit tests for SakeShop mapping functions.
+ *
+ * These tests verify the correct conversion of [SakeShopDto] objects
+ * to domain model [SakeShop] objects using the extension functions
+ * defined in the mapper.
+ */
 class SakeShopMapperTest {
 
     private val mockedDto = SakeShopDto(
@@ -26,7 +33,7 @@ class SakeShopMapperTest {
         assertEquals("Mocked Sake Shop", result.name)
         assertEquals("Mocked description", result.description)
         assertEquals("https://mock.com/mock.jpg", result.picture)
-        assertEquals(4.5f, result.rating, 0.01f) // delta para Float
+        assertEquals(4.5f, result.rating, 0.01f)
         assertEquals("123 Mockled Street", result.address)
         assertEquals(listOf(35.6762, 139.6503), result.coordinates)
         assertEquals("https://maps.google.com/mock", result.googleMapsLink)

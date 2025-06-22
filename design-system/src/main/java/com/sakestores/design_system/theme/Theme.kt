@@ -7,6 +7,12 @@ import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 
+/**
+ * Dark color scheme for the Sake Stores design system.
+ *
+ * Defines the color palette used when the system is in dark theme mode,
+ * including primary, secondary, tertiary colors, background, surface, and their corresponding "on" colors.
+ */
 private val DarkColorScheme = darkColorScheme(
     primary = SakePrimaryLight,
     secondary = SakeSecondaryLight,
@@ -22,6 +28,12 @@ private val DarkColorScheme = darkColorScheme(
     onPrimaryContainer = Color.White
 )
 
+/**
+ * Light color scheme for the Sake Stores design system.
+ *
+ * Defines the color palette used when the system is in light theme mode,
+ * including primary, secondary, tertiary colors, background, surface, and their corresponding "on" colors.
+ */
 private val LightColorScheme = lightColorScheme(
     primary = SakePrimary,
     secondary = SakeSecondary,
@@ -45,6 +57,15 @@ private val LightColorScheme = lightColorScheme(
     onErrorContainer = Color(0xFF410E0B)
 )
 
+/**
+ * Composable function that applies the Sake Stores theme to its content.
+ *
+ * Selects either the dark or light color scheme based on the [darkTheme] parameter
+ * or system setting, and applies the color scheme, typography, and shapes to the MaterialTheme.
+ *
+ * @param darkTheme Optional boolean to override the system dark theme setting. Defaults to system setting.
+ * @param content The composable content to which the theme will be applied.
+ */
 @Composable
 fun SakeStoresTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),

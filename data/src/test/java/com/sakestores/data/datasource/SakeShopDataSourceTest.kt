@@ -3,7 +3,6 @@ package com.sakestores.data.datasource
 import android.content.Context
 import android.content.res.AssetManager
 import com.google.gson.Gson
-import com.sakestores.data.dto.SakeShopDto
 import io.mockk.every
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
@@ -13,6 +12,13 @@ import org.junit.Assert.*
 import java.io.ByteArrayInputStream
 import java.io.IOException
 
+/**
+ * Unit tests for [SakeShopDataSource].
+ *
+ * This class verifies the behavior of [SakeShopDataSource] when reading sake shop data from assets,
+ * including success cases with valid JSON, failure cases with missing or malformed files,
+ * and searching sake shops by name.
+ */
 class SakeShopDataSourceTest {
 
     // Mocks
@@ -41,7 +47,7 @@ class SakeShopDataSourceTest {
     fun setup() {
         context = mockk()
         assetManager = mockk()
-        gson = Gson() // Usar Gson real para parsing
+        gson = Gson()
 
         every { context.assets } returns assetManager
 

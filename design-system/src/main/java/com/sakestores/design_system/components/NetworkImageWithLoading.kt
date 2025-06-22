@@ -18,6 +18,21 @@ import coil.compose.AsyncImagePainter
 import coil.request.ImageRequest
 import com.sakestores.design_system.R
 
+/**
+ * A composable that displays an image from a network URL with a loading indicator.
+ *
+ * This component shows a circular progress indicator while the image is loading.
+ * It uses Coil's [AsyncImage] to asynchronously load the image and provides
+ * a placeholder, error, and fallback drawable resource.
+ *
+ * @param imageUrl The URL of the image to load. Can be null.
+ * @param contentDescription Description of the image for accessibility.
+ * @param modifier Optional [Modifier] for styling and layout adjustments.
+ * @param contentScale Controls how the image should be scaled inside its bounds.
+ *                     Defaults to [ContentScale.Crop].
+ * @param placeholderRes Resource ID of the placeholder drawable shown if the image
+ *                       fails to load or is null. Defaults to [R.drawable.placeholder2].
+ */
 @Composable
 fun NetworkImageWithLoading(
     imageUrl: String?,
@@ -54,4 +69,3 @@ fun NetworkImageWithLoading(
         }
     }
 }
-

@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.dagger.hilt.android)
     alias(libs.plugins.kotlin.serialization)
     id("jacoco")
+    alias(libs.plugins.dokka)
 }
 
 android {

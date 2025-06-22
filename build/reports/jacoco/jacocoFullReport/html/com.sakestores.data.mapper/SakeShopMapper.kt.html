@@ -3,20 +3,32 @@
 import com.sakestores.data.dto.SakeShopDto
 import com.sakestores.domain.model.SakeShop
 
+/**
+ * Extension function to map a [SakeShopDto] to its domain model [SakeShop].
+ *
+ * @receiver SakeShopDto The data transfer object to be converted.
+ * @return SakeShop The corresponding domain model object.
+ */
 fun SakeShopDto.toDomain(): SakeShop {
-<span class="fc" id="L7">    return SakeShop(</span>
-<span class="fc" id="L8">        name = name,</span>
-<span class="fc" id="L9">        description = description,</span>
-<span class="fc" id="L10">        picture = picture,</span>
-<span class="fc" id="L11">        rating = rating,</span>
-<span class="fc" id="L12">        address = address,</span>
-<span class="fc" id="L13">        coordinates = coordinates,</span>
-<span class="fc" id="L14">        googleMapsLink = googleMapsLink,</span>
-<span class="fc" id="L15">        website = website</span>
+<span class="fc" id="L13">    return SakeShop(</span>
+<span class="fc" id="L14">        name = name,</span>
+<span class="fc" id="L15">        description = description,</span>
+<span class="fc" id="L16">        picture = picture,</span>
+<span class="fc" id="L17">        rating = rating,</span>
+<span class="fc" id="L18">        address = address,</span>
+<span class="fc" id="L19">        coordinates = coordinates,</span>
+<span class="fc" id="L20">        googleMapsLink = googleMapsLink,</span>
+<span class="fc" id="L21">        website = website</span>
     )
 }
 
+/**
+ * Extension function to map a list of [SakeShopDto] objects to a list of domain model [SakeShop] objects.
+ *
+ * @receiver List&lt;SakeShopDto&gt; The list of DTOs to be converted.
+ * @return List&lt;SakeShop&gt; The list of corresponding domain model objects.
+ */
 fun List&lt;SakeShopDto&gt;.toDomain(): List&lt;SakeShop&gt; {
-<span class="fc" id="L20">    return map { it.toDomain()}</span>
+<span class="fc" id="L32">    return map { it.toDomain() }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

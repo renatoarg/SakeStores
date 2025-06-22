@@ -15,20 +15,27 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.Assert.*
 
+/**
+ * Unit tests for [SakeShopDetailsViewModel].
+ *
+ * This test class verifies the initial state, successful data loading,
+ * handling of null results, error scenarios, and error clearing behavior
+ * of the ViewModel when fetching sake shop details.
+ */
 @OptIn(ExperimentalCoroutinesApi::class)
 class SakeShopDetailsViewModelTest {
 
+    /**
+     * Rule to execute LiveData tasks synchronously.
+     */
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    // Test dispatcher
     private val testDispatcher = UnconfinedTestDispatcher()
 
-    // Mocks
     private lateinit var getSakeShopDetailsUseCase: GetSakeShopDetailsUseCase
     private lateinit var viewModel: SakeShopDetailsViewModel
 
-    // Test data
     private val testShopName = "Test Sake Shop"
     private val sampleSakeShop = SakeShop(
         name = "Test Sake Shop",
@@ -41,6 +48,9 @@ class SakeShopDetailsViewModelTest {
         website = "https://test.com"
     )
 
+    /**
+     * Sets up the test environment, including main dispatcher and mocks.
+     */
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
@@ -48,14 +58,20 @@ class SakeShopDetailsViewModelTest {
         viewModel = SakeShopDetailsViewModel(getSakeShopDetailsUseCase)
     }
 
+    /**
+     * Resets main dispatcher after tests.
+     */
     @After
     fun tearDown() {
         Dispatchers.resetMain()
     }
 
+    /**
+     * Tests that the initial UI state is empty with no loading, data or error.
+     */
     @Test
     fun `initial state should be empty`() {
-        // When - ViewModel é criado (já no setup)
+        // When
 
         // Then
         val initialState = viewModel.uiState.value
@@ -63,10 +79,13 @@ class SakeShopDetailsViewModelTest {
         assertNull(initialState.sakeShop)
         assertNull(initialState.errorMessage)
 
-        // Verify use case was NOT called
+        // Verify
         coVerify(exactly = 0) { getSakeShopDetailsUseCase(any()) }
     }
 
+    /**
+     * Tests that loading sake shop details successfully updates the UI state.
+     */
     @Test
     fun `loadSakeShopDetails should load shop successfully when found`() = runTest {
         // Given
@@ -87,6 +106,10 @@ class SakeShopDetailsViewModelTest {
         coVerify(exactly = 1) { getSakeShopDetailsUseCase(testShopName) }
     }
 
+    /**
+     * Tests that loading sake shop details returning null results
+     * leaves UI state without data or error.
+     */
     @Test
     fun `loadSakeShopDetails should handle shop not found correctly`() = runTest {
         // Given
@@ -98,13 +121,16 @@ class SakeShopDetailsViewModelTest {
         // Then
         val finalState = viewModel.uiState.value
         assertFalse(finalState.isLoading)
-        assertNull(finalState.sakeShop) // shop não foi encontrada
-        assertNull(finalState.errorMessage) // não é erro, só não encontrou
+        assertNull(finalState.sakeShop)
+        assertNull(finalState.errorMessage)
 
         // Verify use case was called
         coVerify(exactly = 1) { getSakeShopDetailsUseCase(testShopName) }
     }
 
+    /**
+     * Tests that errors returned by the use case update the UI state with the error message.
+     */
     @Test
     fun `loadSakeShopDetails should handle error correctly`() = runTest {
         // Given
@@ -124,6 +150,9 @@ class SakeShopDetailsViewModelTest {
         coVerify(exactly = 1) { getSakeShopDetailsUseCase(testShopName) }
     }
 
+    /**
+     * Tests that errors without message set a default "Unknown error occurred".
+     */
     @Test
     fun `loadSakeShopDetails should handle exception without message`() = runTest {
         // Given
@@ -140,16 +169,19 @@ class SakeShopDetailsViewModelTest {
         assertEquals("Unknown error occurred", finalState.errorMessage)
     }
 
+    /**
+     * Tests that a new successful load clears any previous error messages.
+     */
     @Test
     fun `loadSakeShopDetails should clear previous error on new successful call`() = runTest {
-        // Given - primeiro erro
+        // Given
         coEvery { getSakeShopDetailsUseCase(testShopName) } returns Result.failure(Exception("Network error"))
         viewModel.loadSakeShopDetails(testShopName)
 
         // Verify initial error state
         assertEquals("Network error", viewModel.uiState.value.errorMessage)
 
-        // When - segunda chamada com sucesso
+        // When
         coEvery { getSakeShopDetailsUseCase(testShopName) } returns Result.success(sampleSakeShop)
         viewModel.loadSakeShopDetails(testShopName)
 
@@ -158,6 +190,6 @@ class SakeShopDetailsViewModelTest {
         assertFalse(finalState.isLoading)
         assertNotNull(finalState.sakeShop)
         assertEquals("Test Sake Shop", finalState.sakeShop?.name)
-        assertNull(finalState.errorMessage) // erro foi limpo
+        assertNull(finalState.errorMessage)
     }
 }

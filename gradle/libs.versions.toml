@@ -32,6 +32,7 @@ turbine = "1.1.0"
 composeAnimation = "1.7.1"
 uiTestJunit4 = "1.6.7"
 compose-compiler = "1.5.14"
+dokka_version = "1.9.10"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -111,3 +112,5 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 # compose compler
 compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "compose-compiler" }
+# dokka
+dokka = { id = "org.jetbrains.dokka", version.ref = "dokka_version" }

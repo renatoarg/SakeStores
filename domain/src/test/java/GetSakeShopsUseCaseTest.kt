@@ -11,17 +11,30 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
+/**
+ * Unit tests for [GetSakeShopsUseCase].
+ *
+ * Tests the behavior of the use case when fetching the list of sake shops,
+ * covering success, failure, and empty list scenarios.
+ */
 class GetSakeShopsUseCaseTest {
 
     private lateinit var repository: SakeShopRepository
     private lateinit var useCase: GetSakeShopsUseCase
 
+    /**
+     * Sets up the mock repository and use case before each test.
+     */
     @Before
     fun setup() {
         repository = mockk()
         useCase = GetSakeShopsUseCase(repository)
     }
 
+    /**
+     * Tests that invoking the use case returns a successful result
+     * with the list of sake shops when the repository returns success.
+     */
     @Test
     fun `invoke should return success when repository returns success`() = runTest {
         // Given
@@ -58,6 +71,10 @@ class GetSakeShopsUseCaseTest {
         coVerify(exactly = 1) { repository.getSakeShops() }
     }
 
+    /**
+     * Tests that invoking the use case returns a failure result
+     * when the repository returns a failure.
+     */
     @Test
     fun `invoke should return failure when repository returns failure`() = runTest {
         // Given
@@ -73,6 +90,10 @@ class GetSakeShopsUseCaseTest {
         coVerify(exactly = 1) { repository.getSakeShops() }
     }
 
+    /**
+     * Tests that invoking the use case returns a successful result with
+     * an empty list when the repository returns an empty list.
+     */
     @Test
     fun `invoke should return empty list when repository returns empty list`() = runTest {
         // Given

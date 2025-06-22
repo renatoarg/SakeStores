@@ -10,6 +10,13 @@ import org.junit.Before
 import org.junit.Test
 import org.junit.Assert.*
 
+/**
+ * Unit tests for [SakeShopRepositoryImpl].
+ *
+ * These tests verify the repository's behavior in fetching sake shop data
+ * from the underlying [SakeShopDataSource], ensuring correct handling of
+ * success and failure results for both fetching all shops and fetching by name.
+ */
 class SakeShopRepositoryImplTest {
 
     // Mocks

@@ -14,6 +14,22 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
+/**
+ * Root composable that sets up navigation and shared transitions for the Sake Stores app.
+ *
+ * This function defines the navigation graph using [NavHost], allowing users to navigate between:
+ * - [SakeShopsListScreen]: A list of local sake shops.
+ * - [SakeShopDetailsScreen]: A details view for a selected shop.
+ *
+ * It also uses [SharedTransitionLayout] from Jetpack Compose to enable animated transitions
+ * between composable destinations.
+ *
+ * Navigation arguments (like the shop name) are URL-encoded to support safe passing of string values.
+ *
+ * @param modifier A [Modifier] for styling or layout purposes. Defaults to [Modifier].
+ * @param navController The navigation controller used to manage composable destinations.
+ * Defaults to a new instance created with [rememberNavController].
+ */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun SakeStores(

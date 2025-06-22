@@ -8,6 +8,7 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,156 +50,165 @@ import com.sakestores.design_system.theme.SakeSecondary
 import com.sakestores.design_system.theme.SakeStoresTheme
 import com.sakestores.domain.model.SakeShop
 
+/**
+ * Composable function that displays detailed content for a [SakeShop] within a shared transition scope.
+ *
+ * This layout includes:
+ * - A header image with shared transition effect.
+ * - Sake shop name with shared transition effect.
+ * - Rating display with star icon.
+ * - Description of the sake shop.
+ * - Address section with location icon and coordinates.
+ * - Action buttons for opening location in maps and visiting the website.
+ *
+ * @param sakeShop The data model representing the sake shop details to display.
+ * @param modifier Optional [Modifier] for styling this composable.
+ * @param onMapsClick Lambda called with the Google Maps URL when the &quot;Open in Maps&quot; button is clicked.
+ * @param onWebsiteClick Lambda called with the website URL when the &quot;Visit Website&quot; button is clicked.
+ * @param animatedVisibilityScope The [AnimatedVisibilityScope] used for shared transition animation.
+ * @param onBackClick Lambda called when a back action is triggered (not used in the current UI).
+ */
 @Composable
 fun SharedTransitionScope.SakeShopDetailsContent(
     sakeShop: SakeShop,
-<span class="nc bnc" id="L55" title="All 2 branches missed.">    modifier: Modifier = Modifier,</span>
-<span class="nc bnc" id="L56" title="All 2 branches missed.">    onMapsClick: (String) -&gt; Unit = {},</span>
-<span class="nc bnc" id="L57" title="All 2 branches missed.">    onWebsiteClick: (String) -&gt; Unit = {},</span>
+<span class="nc bnc" id="L74" title="All 2 branches missed.">    modifier: Modifier = Modifier,</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">    onMapsClick: (String) -&gt; Unit = {},</span>
+<span class="nc bnc" id="L76" title="All 2 branches missed.">    onWebsiteClick: (String) -&gt; Unit = {},</span>
     animatedVisibilityScope: AnimatedVisibilityScope,
     onBackClick: () -&gt; Unit
-<span class="nc bnc" id="L60" title="All 2 branches missed.">) {</span>
-<span class="nc" id="L61">    Column(</span>
-<span class="nc" id="L62">        modifier = modifier</span>
-<span class="nc" id="L63">            .fillMaxSize()</span>
-<span class="nc" id="L64">            .verticalScroll(rememberScrollState()),</span>
-<span class="nc" id="L65">        verticalArrangement = Arrangement.spacedBy(16.dp)</span>
+<span class="nc bnc" id="L79" title="All 2 branches missed.">) {</span>
+<span class="nc" id="L80">    Column(</span>
+<span class="nc" id="L81">        modifier = modifier</span>
+<span class="nc" id="L82">            .fillMaxSize()</span>
+<span class="nc" id="L83">            .verticalScroll(rememberScrollState()),</span>
+<span class="nc" id="L84">        verticalArrangement = Arrangement.spacedBy(16.dp)</span>
     ) {
         // Image Card
-<span class="nc" id="L68">        Column(</span>
-<span class="nc" id="L69">            modifier = Modifier.fillMaxWidth()</span>
+<span class="nc" id="L87">        Column(</span>
+<span class="nc" id="L88">            modifier = Modifier.fillMaxWidth()</span>
         ) {
-<span class="nc" id="L71">            NetworkImageWithLoading(</span>
-<span class="nc" id="L72">                imageUrl = sakeShop.picture,</span>
-<span class="nc" id="L73">                contentDescription = sakeShop.name,</span>
-<span class="nc" id="L74">                modifier = Modifier</span>
-<span class="nc" id="L75">                    .fillMaxWidth()</span>
-<span class="nc" id="L76">                    .height(300.dp)</span>
-<span class="nc" id="L77">                    .background(MaterialTheme.colorScheme.surfaceVariant)</span>
-<span class="nc" id="L78">                    .sharedElement(</span>
-<span class="nc" id="L79">                        state = rememberSharedContentState(&quot;image/${sakeShop.name}&quot;),</span>
-<span class="nc" id="L80">                        animatedVisibilityScope = animatedVisibilityScope</span>
+<span class="nc" id="L90">            NetworkImageWithLoading(</span>
+<span class="nc" id="L91">                imageUrl = sakeShop.picture,</span>
+<span class="nc" id="L92">                contentDescription = sakeShop.name,</span>
+<span class="nc" id="L93">                modifier = Modifier</span>
+<span class="nc" id="L94">                    .fillMaxWidth()</span>
+<span class="nc" id="L95">                    .height(300.dp)</span>
+<span class="nc" id="L96">                    .background(MaterialTheme.colorScheme.surfaceVariant)</span>
+<span class="nc" id="L97">                    .sharedElement(</span>
+<span class="nc" id="L98">                        state = rememberSharedContentState(&quot;image/${sakeShop.name}&quot;),</span>
+<span class="nc" id="L99">                        animatedVisibilityScope = animatedVisibilityScope</span>
                     )
             )
-<span class="nc" id="L83">            Spacer(modifier = Modifier.height(16.dp))</span>
-<span class="nc" id="L84">            Text(</span>
-<span class="nc" id="L85">                text = sakeShop.name,</span>
-<span class="nc" id="L86">                style = MaterialTheme.typography.titleLarge,</span>
-<span class="nc" id="L87">                fontWeight = FontWeight.Bold,</span>
-<span class="nc" id="L88">                modifier = Modifier</span>
-<span class="nc" id="L89">                    .padding(16.dp)</span>
-<span class="nc" id="L90">                    .sharedElement(</span>
-<span class="nc" id="L91">                        state = rememberSharedContentState(&quot;text/${sakeShop.name}&quot;),</span>
-<span class="nc" id="L92">                        animatedVisibilityScope = animatedVisibilityScope</span>
+<span class="nc" id="L102">            Spacer(modifier = Modifier.height(16.dp))</span>
+<span class="nc" id="L103">            Text(</span>
+<span class="nc" id="L104">                text = sakeShop.name,</span>
+<span class="nc" id="L105">                style = MaterialTheme.typography.titleLarge,</span>
+<span class="nc" id="L106">                fontWeight = FontWeight.Bold,</span>
+<span class="nc" id="L107">                modifier = Modifier</span>
+<span class="nc" id="L108">                    .padding(16.dp)</span>
+<span class="nc" id="L109">                    .sharedElement(</span>
+<span class="nc" id="L110">                        state = rememberSharedContentState(&quot;text/${sakeShop.name}&quot;),</span>
+<span class="nc" id="L111">                        animatedVisibilityScope = animatedVisibilityScope</span>
                     )
             )
-<span class="nc" id="L95">        }</span>
+<span class="nc" id="L114">        }</span>
 
-<span class="nc" id="L97">        Card(</span>
-<span class="nc" id="L98">            modifier = Modifier</span>
-<span class="nc" id="L99">                .fillMaxWidth()</span>
-<span class="nc" id="L100">                .padding(horizontal = 16.dp),</span>
-<span class="nc" id="L101">            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),</span>
-<span class="nc" id="L102">        ) {</span>
-<span class="nc bnc" id="L103" title="All 6 branches missed.">            Column(</span>
-<span class="nc" id="L104">                modifier = Modifier.padding(16.dp),</span>
-<span class="nc" id="L105">                verticalArrangement = Arrangement.spacedBy(12.dp)</span>
+<span class="nc" id="L116">        Card(</span>
+<span class="nc" id="L117">            modifier = Modifier</span>
+<span class="nc" id="L118">                .fillMaxWidth()</span>
+<span class="nc" id="L119">                .padding(horizontal = 16.dp),</span>
+<span class="nc" id="L120">            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),</span>
+<span class="nc" id="L121">        ) {</span>
+<span class="nc bnc" id="L122" title="All 6 branches missed.">            Column(</span>
+<span class="nc" id="L123">                modifier = Modifier.padding(16.dp),</span>
+<span class="nc" id="L124">                verticalArrangement = Arrangement.spacedBy(12.dp)</span>
             ) {
-<span class="nc" id="L107">                Row(</span>
-<span class="nc" id="L108">                    verticalAlignment = Alignment.CenterVertically,</span>
-<span class="nc" id="L109">                    horizontalArrangement = Arrangement.spacedBy(4.dp)</span>
+<span class="nc" id="L126">                Row(</span>
+<span class="nc" id="L127">                    verticalAlignment = Alignment.CenterVertically,</span>
+<span class="nc" id="L128">                    horizontalArrangement = Arrangement.spacedBy(4.dp)</span>
                 ) {
-<span class="nc" id="L111">                    Icon(</span>
-<span class="nc" id="L112">                        imageVector = Icons.Default.Star,</span>
-<span class="nc" id="L113">                        contentDescription = &quot;Rating&quot;,</span>
-<span class="nc" id="L114">                        tint = SakeSecondary,</span>
-<span class="nc" id="L115">                        modifier = Modifier.size(30.dp)</span>
+<span class="nc" id="L130">                    Icon(</span>
+<span class="nc" id="L131">                        imageVector = Icons.Default.Star,</span>
+<span class="nc" id="L132">                        contentDescription = &quot;Rating&quot;,</span>
+<span class="nc" id="L133">                        tint = SakeSecondary,</span>
+<span class="nc" id="L134">                        modifier = Modifier.size(30.dp)</span>
                     )
-<span class="nc" id="L117">                    Text(</span>
-<span class="nc" id="L118">                        text = sakeShop.rating.toString(),</span>
-<span class="nc" id="L119">                        style = MaterialTheme.typography.titleMedium,</span>
-<span class="nc" id="L120">                        fontWeight = FontWeight.Medium</span>
+<span class="nc" id="L136">                    Text(</span>
+<span class="nc" id="L137">                        text = sakeShop.rating.toString(),</span>
+<span class="nc" id="L138">                        style = MaterialTheme.typography.titleMedium,</span>
+<span class="nc" id="L139">                        fontWeight = FontWeight.Medium</span>
                     )
-<span class="nc" id="L122">                }</span>
+<span class="nc" id="L141">                }</span>
 
-<span class="nc" id="L124">                Text(</span>
-<span class="nc" id="L125">                    text = sakeShop.description,</span>
-<span class="nc" id="L126">                    style = MaterialTheme.typography.bodyLarge,</span>
-<span class="nc" id="L127">                    color = MaterialTheme.colorScheme.onSurfaceVariant</span>
+<span class="nc" id="L143">                Text(</span>
+<span class="nc" id="L144">                    text = sakeShop.description,</span>
+<span class="nc" id="L145">                    style = MaterialTheme.typography.bodyLarge,</span>
+<span class="nc" id="L146">                    color = MaterialTheme.colorScheme.onSurfaceVariant</span>
                 )
-<span class="nc" id="L129">            }</span>
-<span class="nc" id="L130">        }</span>
+<span class="nc" id="L148">            }</span>
+<span class="nc" id="L149">        }</span>
 
         // Address Card
-<span class="nc" id="L133">        Card(</span>
-<span class="nc" id="L134">            modifier = Modifier</span>
-<span class="nc" id="L135">                .fillMaxWidth()</span>
-<span class="nc" id="L136">                .padding(horizontal = 16.dp),</span>
-<span class="nc" id="L137">            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),</span>
-<span class="nc" id="L138">        ) {</span>
-<span class="nc bnc" id="L139" title="All 6 branches missed.">            Column(</span>
-<span class="nc" id="L140">                modifier = Modifier.padding(16.dp),</span>
-<span class="nc" id="L141">                verticalArrangement = Arrangement.spacedBy(8.dp)</span>
+<span class="nc" id="L152">        Card(</span>
+<span class="nc" id="L153">            modifier = Modifier</span>
+<span class="nc" id="L154">                .fillMaxWidth()</span>
+<span class="nc" id="L155">                .padding(horizontal = 16.dp)</span>
+<span class="nc" id="L156">                .clickable { onMapsClick(sakeShop.googleMapsLink) },</span>
+<span class="nc" id="L157">            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),</span>
+<span class="nc" id="L158">        ) {</span>
+<span class="nc bnc" id="L159" title="All 6 branches missed.">            Column(</span>
+<span class="nc" id="L160">                modifier = Modifier.padding(16.dp),</span>
+<span class="nc" id="L161">                verticalArrangement = Arrangement.spacedBy(8.dp)</span>
             ) {
-<span class="nc" id="L143">                Row(</span>
-<span class="nc" id="L144">                    verticalAlignment = Alignment.CenterVertically,</span>
-<span class="nc" id="L145">                    horizontalArrangement = Arrangement.spacedBy(8.dp)</span>
+<span class="nc" id="L163">                Row(</span>
+<span class="nc" id="L164">                    verticalAlignment = Alignment.CenterVertically,</span>
+<span class="nc" id="L165">                    horizontalArrangement = Arrangement.spacedBy(8.dp)</span>
                 ) {
-<span class="nc" id="L147">                    Icon(</span>
-<span class="nc" id="L148">                        imageVector = Icons.Default.LocationOn,</span>
-<span class="nc" id="L149">                        contentDescription = &quot;Location&quot;,</span>
-<span class="nc" id="L150">                        tint = MaterialTheme.colorScheme.primary</span>
+<span class="nc" id="L167">                    Icon(</span>
+<span class="nc" id="L168">                        imageVector = Icons.Default.LocationOn,</span>
+<span class="nc" id="L169">                        contentDescription = &quot;Location&quot;,</span>
+<span class="nc" id="L170">                        tint = MaterialTheme.colorScheme.primary</span>
                     )
-<span class="nc" id="L152">                    Text(</span>
-<span class="nc" id="L153">                        text = &quot;Address&quot;,</span>
-<span class="nc" id="L154">                        style = MaterialTheme.typography.titleMedium,</span>
-<span class="nc" id="L155">                        fontWeight = FontWeight.Bold</span>
+<span class="nc" id="L172">                    Text(</span>
+<span class="nc" id="L173">                        text = &quot;Address&quot;,</span>
+<span class="nc" id="L174">                        style = MaterialTheme.typography.titleMedium,</span>
+<span class="nc" id="L175">                        fontWeight = FontWeight.Bold</span>
                     )
-<span class="nc" id="L157">                }</span>
+<span class="nc" id="L177">                }</span>
 
-<span class="nc" id="L159">                Text(</span>
-<span class="nc" id="L160">                    text = sakeShop.address,</span>
-<span class="nc" id="L161">                    style = MaterialTheme.typography.bodyMedium,</span>
-<span class="nc" id="L162">                    color = MaterialTheme.colorScheme.onSurfaceVariant</span>
+<span class="nc" id="L179">                Text(</span>
+<span class="nc" id="L180">                    text = sakeShop.address,</span>
+<span class="nc" id="L181">                    style = MaterialTheme.typography.bodyMedium,</span>
+<span class="nc" id="L182">                    color = MaterialTheme.colorScheme.onSurfaceVariant</span>
                 )
-
-<span class="nc" id="L165">                Text(</span>
-<span class="nc" id="L166">                    text = &quot;Coordinates: ${sakeShop.coordinates[0]}, ${sakeShop.coordinates[1]}&quot;,</span>
-<span class="nc" id="L167">                    style = MaterialTheme.typography.bodySmall,</span>
-<span class="nc" id="L168">                    color = MaterialTheme.colorScheme.onSurfaceVariant</span>
-                )
-<span class="nc" id="L170">            }</span>
-<span class="nc" id="L171">        }</span>
+<span class="nc" id="L184">            }</span>
+<span class="nc" id="L185">        }</span>
 
         // Action Buttons
-<span class="nc" id="L174">        Row(</span>
-<span class="nc" id="L175">            modifier = Modifier</span>
-<span class="nc" id="L176">                .fillMaxWidth()</span>
-<span class="nc" id="L177">                .padding(horizontal = 16.dp),</span>
-<span class="nc" id="L178">            horizontalArrangement = Arrangement.spacedBy(12.dp)</span>
+<span class="nc" id="L188">        Row(</span>
+<span class="nc" id="L189">            modifier = Modifier</span>
+<span class="nc" id="L190">                .fillMaxWidth()</span>
+<span class="nc" id="L191">                .padding(horizontal = 16.dp),</span>
+<span class="nc" id="L192">            horizontalArrangement = Arrangement.spacedBy(12.dp)</span>
         ) {
-<span class="nc" id="L180">            Button(</span>
-<span class="nc" id="L181">                onClick = { onMapsClick(sakeShop.googleMapsLink) },</span>
-<span class="nc" id="L182">                modifier = Modifier.weight(1f)</span>
-            ) {
-                Text(&quot;Open in Maps&quot;)
-            }
-
-<span class="nc" id="L187">            OutlinedButton(</span>
-<span class="nc" id="L188">                onClick = { onWebsiteClick(sakeShop.website) },</span>
-<span class="nc" id="L189">                modifier = Modifier.weight(1f)</span>
+<span class="nc" id="L194">            OutlinedButton(</span>
+<span class="nc" id="L195">                onClick = { onWebsiteClick(sakeShop.website) },</span>
+<span class="nc" id="L196">                modifier = Modifier.weight(1f)</span>
             ) {
                 Text(&quot;Visit Website&quot;)
             }
-<span class="nc" id="L193">        }</span>
-<span class="nc" id="L194">    }</span>
-<span class="nc" id="L195">}</span>
+<span class="nc" id="L200">        }</span>
+<span class="nc" id="L201">    }</span>
+<span class="nc" id="L202">}</span>
 
+/**
+ * Preview of [SakeShopDetailsContent] in light theme with sample data.
+ */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true, backgroundColor = 0xFFFFFBF5)
 @Composable
-<span class="nc bnc" id="L200" title="All 6 branches missed.">private fun SakeShopDetailsContentPreview() {</span>
-<span class="nc bnc" id="L201" title="All 2 branches missed.">    SakeStoresTheme {</span>
+<span class="nc bnc" id="L210" title="All 6 branches missed.">private fun SakeShopDetailsContentPreview() {</span>
+<span class="nc bnc" id="L211" title="All 2 branches missed.">    SakeStoresTheme {</span>
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
@@ -219,13 +229,16 @@ fun SharedTransitionScope.SakeShopDetailsContent(
             }
         }
     }
-<span class="nc bnc" id="L222" title="All 2 branches missed.">}</span>
+<span class="nc bnc" id="L232" title="All 2 branches missed.">}</span>
 
+/**
+ * Preview of [SakeShopDetailsContent] in dark theme with sample data.
+ */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true, backgroundColor = 0xFFFFFBF5)
 @Composable
-<span class="nc bnc" id="L227" title="All 6 branches missed.">private fun SakeShopDetailsContentDarkPreview() {</span>
-<span class="nc bnc" id="L228" title="All 2 branches missed.">    SakeStoresTheme(darkTheme = true) {</span>
+<span class="nc bnc" id="L240" title="All 6 branches missed.">private fun SakeShopDetailsContentDarkPreview() {</span>
+<span class="nc bnc" id="L241" title="All 2 branches missed.">    SakeStoresTheme(darkTheme = true) {</span>
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
@@ -246,13 +259,16 @@ fun SharedTransitionScope.SakeShopDetailsContent(
             }
         }
     }
-<span class="nc bnc" id="L249" title="All 2 branches missed.">}</span>
+<span class="nc bnc" id="L262" title="All 2 branches missed.">}</span>
 
+/**
+ * Preview of [SakeShopDetailsContent] with long text description and light theme.
+ */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true, backgroundColor = 0xFFFFFBF5, heightDp = 800)
 @Composable
-<span class="nc bnc" id="L254" title="All 6 branches missed.">private fun SakeShopDetailsContentLongTextPreview() {</span>
-<span class="nc bnc" id="L255" title="All 2 branches missed.">    SakeStoresTheme {</span>
+<span class="nc bnc" id="L270" title="All 6 branches missed.">private fun SakeShopDetailsContentLongTextPreview() {</span>
+<span class="nc bnc" id="L271" title="All 2 branches missed.">    SakeStoresTheme {</span>
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
@@ -273,13 +289,16 @@ fun SharedTransitionScope.SakeShopDetailsContent(
             }
         }
     }
-<span class="nc bnc" id="L276" title="All 2 branches missed.">}</span>
+<span class="nc bnc" id="L292" title="All 2 branches missed.">}</span>
 
+/**
+ * Compact width preview of [SakeShopDetailsContent].
+ */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true, backgroundColor = 0xFFFFFBF5, widthDp = 320, heightDp = 600)
 @Composable
-<span class="nc bnc" id="L281" title="All 6 branches missed.">private fun SakeShopDetailsContentCompactPreview() {</span>
-<span class="nc bnc" id="L282" title="All 2 branches missed.">    SakeStoresTheme {</span>
+<span class="nc bnc" id="L300" title="All 6 branches missed.">private fun SakeShopDetailsContentCompactPreview() {</span>
+<span class="nc bnc" id="L301" title="All 2 branches missed.">    SakeStoresTheme {</span>
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = MaterialTheme.colorScheme.background
@@ -300,44 +319,32 @@ fun SharedTransitionScope.SakeShopDetailsContent(
             }
         }
     }
-<span class="nc bnc" id="L303" title="All 2 branches missed.">}</span>
+<span class="nc bnc" id="L322" title="All 2 branches missed.">}</span>
 
-<span class="nc" id="L305">private fun sampleDetailedSakeShop() = SakeShop(</span>
-<span class="nc" id="L306">    name = &quot;Hakutsuru Sake Museum Store&quot;,</span>
-<span class="nc" id="L307">    picture = &quot;https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800&quot;,</span>
-<span class="nc" id="L308">    description = &quot;Experience authentic Japanese sake culture at our traditional store located in the heart of Kyoto. We offer a carefully curated selection of premium sake from renowned breweries across Japan, featuring both traditional and modern brewing techniques.&quot;,</span>
-<span class="nc" id="L309">    rating = 4.8f,</span>
-<span class="nc" id="L310">    address = &quot;2-1-1 Nishiki, Naka-ku, Kyoto 604-8031, Japan&quot;,</span>
-<span class="nc" id="L311">    coordinates = listOf(35.0042, 135.7695),</span>
-<span class="nc" id="L312">    googleMapsLink = &quot;https://maps.google.com/?q=35.0042,135.7695&quot;,</span>
-<span class="nc" id="L313">    website = &quot;https://hakutsuru-sake.com&quot;</span>
-<span class="nc" id="L314">)</span>
+/**
+ * Provides a sample [SakeShop] instance with typical data.
+ */
+<span class="nc" id="L327">private fun sampleDetailedSakeShop(): SakeShop = SakeShop(</span>
+<span class="nc" id="L328">    name = &quot;Sake House Tokyo&quot;,</span>
+<span class="nc" id="L329">    picture = &quot;https://example.com/sakehouse.jpg&quot;,</span>
+<span class="nc" id="L330">    description = &quot;Authentic sake experience from the heart of Tokyo with a wide selection and expert guidance.&quot;,</span>
+<span class="nc" id="L331">    rating = 4.8f,</span>
+<span class="nc" id="L332">    address = &quot;123 Tokyo Street, Tokyo, Japan&quot;,</span>
+<span class="nc" id="L333">    coordinates = listOf(35.6895, 139.6917),</span>
+<span class="nc" id="L334">    googleMapsLink = &quot;https://maps.google.com/?q=35.6895,139.6917&quot;,</span>
+<span class="nc" id="L335">    website = &quot;https://sakehousetokyo.example.com&quot;</span>
+<span class="nc" id="L336">)</span>
 
-<span class="nc" id="L316">private fun sampleDetailedSakeShopLongText() = SakeShop(</span>
-<span class="nc" id="L317">    name = &quot;Traditional Artisan Sake Brewery &amp; Heritage Store with Centuries of History&quot;,</span>
-<span class="nc" id="L318">    picture = &quot;https://images.unsplash.com/photo-1569880153113-3b31f8ad7bbc?w=800&quot;,</span>
-<span class="nc" id="L319">    description = &quot;Our family-owned sake brewery has been crafting exceptional sake for over 400 years, passing down traditional brewing techniques through 15 generations. Located in the historic district of Fushimi, we specialize in junmai daiginjo and premium aged sake varieties. Our store features a tasting room where visitors can experience the full range of our sake portfolio, guided by our master brewers who share the secrets and stories behind each unique blend. We also offer traditional sake ceremony experiences and educational workshops about the intricate process of sake brewing, from rice selection to fermentation and aging.&quot;,</span>
-<span class="nc" id="L320">    rating = 4.9f,</span>
-<span class="nc" id="L321">    address = &quot;123-45 Fushimi Momoyama-cho, Fushimi-ku, Kyoto 612-8039, Japan - Traditional Sake District, Historical Preservation Area&quot;,</span>
-<span class="nc" id="L322">    coordinates = listOf(34.9388, 135.7647),</span>
-<span class="nc" id="L323">    googleMapsLink = &quot;https://maps.google.com/?q=34.9388,135.7647&quot;,</span>
-<span class="nc" id="L324">    website = &quot;https://traditional-artisan-sake-brewery.co.jp&quot;</span>
-<span class="nc" id="L325">)</span>
-
-<span class="nc" id="L327">private fun sampleDetailedSakeShop(</span>
-<span class="nc" id="L328">    name: String = &quot;Sample Sake Store&quot;,</span>
-<span class="nc" id="L329">    rating: Float = 4.5f,</span>
-<span class="nc" id="L330">    description: String = &quot;A wonderful sake store with great selection.&quot;,</span>
-<span class="nc" id="L331">    address: String = &quot;Tokyo, Japan&quot;,</span>
-<span class="nc" id="L332">    imageUrl: String = &quot;https://images.unsplash.com/photo-1578418166097-fe11b13f8c34?w=800&quot;</span>
-<span class="nc" id="L333">) = SakeShop(</span>
-<span class="nc" id="L334">    name = name,</span>
-<span class="nc" id="L335">    picture = imageUrl,</span>
-<span class="nc" id="L336">    description = description,</span>
-<span class="nc" id="L337">    rating = rating,</span>
-<span class="nc" id="L338">    address = address,</span>
-<span class="nc" id="L339">    coordinates = listOf(35.6762, 139.6503),</span>
-<span class="nc" id="L340">    googleMapsLink = &quot;https://maps.google.com/?q=35.6762,139.6503&quot;,</span>
-<span class="nc" id="L341">    website = &quot;https://example-sake-store.com&quot;</span>
-<span class="nc" id="L342">)</span>
+/**
+ * Provides a sample [SakeShop] with an extended long description for testing scrolling.
+ */
+<span class="nc" id="L341">private fun sampleDetailedSakeShopLongText(): SakeShop = sampleDetailedSakeShop().copy(</span>
+    description = &quot;&quot;&quot;
+        Authentic sake experience from the heart of Tokyo with a wide selection and expert guidance.
+        Our sake is sourced from the finest breweries, featuring rare and exclusive labels.
+        Enjoy tasting sessions, sake pairing with traditional dishes, and cultural events hosted regularly.
+        Whether you are a beginner or a connoisseur, Sake House Tokyo offers a unique and memorable journey.
+        Visit us to explore the rich heritage of sake craftsmanship and modern innovations in brewing.
+<span class="nc" id="L348">    &quot;&quot;&quot;.trimIndent()</span>
+<span class="nc" id="L349">)</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

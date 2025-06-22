@@ -2,9 +2,16 @@
 
 import com.sakestores.domain.model.SakeShop
 
-<span class="fc" id="L5">data class SakeShopsListUiState(</span>
-<span class="fc" id="L6">    val isLoading: Boolean = false,</span>
-<span class="fc" id="L7">    val sakeShops: List&lt;SakeShop&gt; = emptyList(),</span>
-<span class="fc" id="L8">    val errorMessage: String? = null</span>
-<span class="fc" id="L9">)</span>
+/**
+ * Represents the UI state for the sake shops list screen.
+ *
+ * @property isLoading Indicates whether the data is currently being loaded.
+ * @property sakeShops The list of sake shops to display.
+ * @property errorMessage Optional error message to show in the UI if loading fails.
+ */
+<span class="fc" id="L12">data class SakeShopsListUiState(</span>
+<span class="fc" id="L13">    val isLoading: Boolean = false,</span>
+<span class="fc" id="L14">    val sakeShops: List&lt;SakeShop&gt; = emptyList(),</span>
+<span class="fc" id="L15">    val errorMessage: String? = null</span>
+<span class="fc" id="L16">)</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

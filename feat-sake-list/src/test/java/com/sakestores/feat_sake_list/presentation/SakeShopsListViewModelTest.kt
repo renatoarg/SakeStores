@@ -15,13 +15,16 @@ import org.junit.Rule
 import org.junit.Test
 import org.junit.Assert.*
 
+/**
+ * Unit tests for [SakeShopsListViewModel], verifying its interaction with [GetSakeShopsUseCase]
+ * and the emitted UI state in various scenarios.
+ */
 @OptIn(ExperimentalCoroutinesApi::class)
 class SakeShopsListViewModelTest {
 
     @get:Rule
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
-    // Test dispatcher
     private val testDispatcher = UnconfinedTestDispatcher()
 
     // Mocks
@@ -42,17 +45,27 @@ class SakeShopsListViewModelTest {
         )
     )
 
+    /**
+     * Sets up the test dispatcher and mocks before each test.
+     */
     @Before
     fun setup() {
         Dispatchers.setMain(testDispatcher)
         getSakeShopsUseCase = mockk()
     }
 
+    /**
+     * Resets the main dispatcher after each test.
+     */
     @After
     fun tearDown() {
         Dispatchers.resetMain()
     }
 
+    /**
+     * Verifies that the ViewModel correctly loads sake shops on initialization
+     * and emits a UI state with the expected data and no errors.
+     */
     @Test
     fun `init should load sake shops successfully`() = runTest {
         // Given
@@ -72,6 +85,10 @@ class SakeShopsListViewModelTest {
         coVerify(exactly = 1) { getSakeShopsUseCase() }
     }
 
+    /**
+     * Verifies that the ViewModel correctly handles an error from the use case
+     * and emits a UI state with an error message.
+     */
     @Test
     fun `init should handle error correctly`() = runTest {
         // Given
@@ -91,32 +108,40 @@ class SakeShopsListViewModelTest {
         coVerify(exactly = 1) { getSakeShopsUseCase() }
     }
 
+    /**
+     * Verifies that calling [SakeShopsListViewModel.loadSakeShops] emits loading states
+     * and updates the UI state accordingly.
+     */
     @Test
     fun `loadSakeShops should emit correct loading states`() = runTest {
         // Given
         coEvery { getSakeShopsUseCase() } returns Result.success(sampleSakeShops)
         viewModel = SakeShopsListViewModel(getSakeShopsUseCase)
 
-        // Reset mock para testar chamada manual
+        // Reset mock
         coEvery { getSakeShopsUseCase() } returns Result.success(emptyList())
 
-        // When - chamada manual
+        // When
         viewModel.loadSakeShops()
 
         // Then
         val finalState = viewModel.uiState.value
-        assertFalse(finalState.isLoading) // deve estar false no final
-        assertTrue(finalState.sakeShops.isEmpty()) // nova chamada retornou empty
+        assertFalse(finalState.isLoading)
+        assertTrue(finalState.sakeShops.isEmpty())
         assertNull(finalState.errorMessage)
 
         // Verify use case was called twice (init + manual)
         coVerify(exactly = 2) { getSakeShopsUseCase() }
     }
 
+    /**
+     * Verifies that the ViewModel gracefully handles an exception without a message
+     * and emits a default error message in the UI state.
+     */
     @Test
     fun `loadSakeShops should handle exception without message`() = runTest {
         // Given
-        val exceptionWithoutMessage = RuntimeException() // sem message
+        val exceptionWithoutMessage = RuntimeException()
         coEvery { getSakeShopsUseCase() } returns Result.failure(exceptionWithoutMessage)
 
         // When
@@ -129,16 +154,20 @@ class SakeShopsListViewModelTest {
         assertEquals("Unknown error occurred", finalState.errorMessage)
     }
 
+    /**
+     * Verifies that calling [SakeShopsListViewModel.loadSakeShops] after an error
+     * clears the previous error message if the new result is successful.
+     */
     @Test
     fun `loadSakeShops should clear previous error message on new call`() = runTest {
-        // Given - primeiro erro
+        // Given
         coEvery { getSakeShopsUseCase() } returns Result.failure(Exception("First error"))
         viewModel = SakeShopsListViewModel(getSakeShopsUseCase)
 
         // Verify initial error state
         assertEquals("First error", viewModel.uiState.value.errorMessage)
 
-        // When - segunda chamada com sucesso
+        // When
         coEvery { getSakeShopsUseCase() } returns Result.success(sampleSakeShops)
         viewModel.loadSakeShops()
 
@@ -146,6 +175,6 @@ class SakeShopsListViewModelTest {
         val finalState = viewModel.uiState.value
         assertFalse(finalState.isLoading)
         assertEquals(1, finalState.sakeShops.size)
-        assertNull(finalState.errorMessage) // erro foi limpo
+        assertNull(finalState.errorMessage)
     }
 }

@@ -6,6 +6,13 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
+/**
+ * Typography definitions for the Sake Stores design system.
+ *
+ * Provides a set of text styles following Material Design 3 guidelines,
+ * including styles for display, headline, title, body, and label texts
+ * with specified font family, weight, size, line height, and letter spacing.
+ */
 val SakeTypography = Typography(
     displayLarge = TextStyle(
         fontFamily = FontFamily.Default,

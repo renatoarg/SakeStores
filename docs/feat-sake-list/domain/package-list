@@ -1,0 +1,28 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.sakestores.domain.model////PointingToDeclaration/domain/com.sakestores.domain.model/index.html
+$dokka.location:com.sakestores.domain.model/SakeShop///PointingToDeclaration/domain/com.sakestores.domain.model/-sake-shop/index.html
+$dokka.location:com.sakestores.domain.model/SakeShop/SakeShop/#kotlin.String#kotlin.String#kotlin.String?#kotlin.Float#kotlin.String#kotlin.collections.List[kotlin.Double]#kotlin.String#kotlin.String/PointingToDeclaration/domain/com.sakestores.domain.model/-sake-shop/-sake-shop.html
+$dokka.location:com.sakestores.domain.model/SakeShop/address/#/PointingToDeclaration/domain/com.sakestores.domain.model/-sake-shop/address.html
+$dokka.location:com.sakestores.domain.model/SakeShop/coordinates/#/PointingToDeclaration/domain/com.sakestores.domain.model/-sake-shop/coordinates.html
+$dokka.location:com.sakestores.domain.model/SakeShop/description/#/PointingToDeclaration/domain/com.sakestores.domain.model/-sake-shop/description.html
+$dokka.location:com.sakestores.domain.model/SakeShop/googleMapsLink/#/PointingToDeclaration/domain/com.sakestores.domain.model/-sake-shop/google-maps-link.html
+$dokka.location:com.sakestores.domain.model/SakeShop/name/#/PointingToDeclaration/domain/com.sakestores.domain.model/-sake-shop/name.html
+$dokka.location:com.sakestores.domain.model/SakeShop/picture/#/PointingToDeclaration/domain/com.sakestores.domain.model/-sake-shop/picture.html
+$dokka.location:com.sakestores.domain.model/SakeShop/rating/#/PointingToDeclaration/domain/com.sakestores.domain.model/-sake-shop/rating.html
+$dokka.location:com.sakestores.domain.model/SakeShop/website/#/PointingToDeclaration/domain/com.sakestores.domain.model/-sake-shop/website.html
+$dokka.location:com.sakestores.domain.repository////PointingToDeclaration/domain/com.sakestores.domain.repository/index.html
+$dokka.location:com.sakestores.domain.repository/SakeShopRepository///PointingToDeclaration/domain/com.sakestores.domain.repository/-sake-shop-repository/index.html
+$dokka.location:com.sakestores.domain.repository/SakeShopRepository/getSakeShopByName/#kotlin.String/PointingToDeclaration/domain/com.sakestores.domain.repository/-sake-shop-repository/get-sake-shop-by-name.html
+$dokka.location:com.sakestores.domain.repository/SakeShopRepository/getSakeShops/#/PointingToDeclaration/domain/com.sakestores.domain.repository/-sake-shop-repository/get-sake-shops.html
+$dokka.location:com.sakestores.domain.usecase////PointingToDeclaration/domain/com.sakestores.domain.usecase/index.html
+$dokka.location:com.sakestores.domain.usecase/GetSakeShopDetailsUseCase///PointingToDeclaration/domain/com.sakestores.domain.usecase/-get-sake-shop-details-use-case/index.html
+$dokka.location:com.sakestores.domain.usecase/GetSakeShopDetailsUseCase/GetSakeShopDetailsUseCase/#com.sakestores.domain.repository.SakeShopRepository/PointingToDeclaration/domain/com.sakestores.domain.usecase/-get-sake-shop-details-use-case/-get-sake-shop-details-use-case.html
+$dokka.location:com.sakestores.domain.usecase/GetSakeShopDetailsUseCase/invoke/#kotlin.String/PointingToDeclaration/domain/com.sakestores.domain.usecase/-get-sake-shop-details-use-case/invoke.html
+$dokka.location:com.sakestores.domain.usecase/GetSakeShopsUseCase///PointingToDeclaration/domain/com.sakestores.domain.usecase/-get-sake-shops-use-case/index.html
+$dokka.location:com.sakestores.domain.usecase/GetSakeShopsUseCase/GetSakeShopsUseCase/#com.sakestores.domain.repository.SakeShopRepository/PointingToDeclaration/domain/com.sakestores.domain.usecase/-get-sake-shops-use-case/-get-sake-shops-use-case.html
+$dokka.location:com.sakestores.domain.usecase/GetSakeShopsUseCase/invoke/#/PointingToDeclaration/domain/com.sakestores.domain.usecase/-get-sake-shops-use-case/invoke.html
+com.sakestores.domain.model
+com.sakestores.domain.repository
+com.sakestores.domain.usecase
+

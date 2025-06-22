@@ -12,17 +12,30 @@ import org.junit.Assert.assertTrue
 import org.junit.Before
 import org.junit.Test
 
+/**
+ * Unit tests for [GetSakeShopDetailsUseCase].
+ *
+ * Tests the behavior of the use case when fetching sake shop details by name,
+ * verifying success and failure scenarios.
+ */
 class GetSakeShopDetailsUseCaseTest {
 
     private lateinit var repository: SakeShopRepository
     private lateinit var useCase: GetSakeShopDetailsUseCase
 
+    /**
+     * Sets up the mock repository and use case before each test.
+     */
     @Before
     fun setup() {
         repository = mockk()
         useCase = GetSakeShopDetailsUseCase(repository)
     }
 
+    /**
+     * Tests that invoking the use case returns a successful result with a shop
+     * when the repository finds a matching shop by name.
+     */
     @Test
     fun `invoke should return success with shop when repository finds shop`() = runTest {
         // Given
@@ -48,6 +61,10 @@ class GetSakeShopDetailsUseCaseTest {
         coVerify(exactly = 1) { repository.getSakeShopByName(shopName) }
     }
 
+    /**
+     * Tests that invoking the use case returns a successful result with null
+     * when the repository does not find a shop by the given name.
+     */
     @Test
     fun `invoke should return success with null when repository doesn't find shop`() = runTest {
         // Given
@@ -63,6 +80,10 @@ class GetSakeShopDetailsUseCaseTest {
         coVerify(exactly = 1) { repository.getSakeShopByName(shopName) }
     }
 
+    /**
+     * Tests that invoking the use case returns a failure result when the repository
+     * returns a failure.
+     */
     @Test
     fun `invoke should return failure when repository returns failure`() = runTest {
         // Given

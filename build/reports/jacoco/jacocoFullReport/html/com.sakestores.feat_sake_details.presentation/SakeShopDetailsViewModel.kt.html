@@ -10,32 +10,49 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel responsible for managing the UI state of the Sake Shop Details screen.
+ *
+ * @property getSakeShopDetailsUseCase Use case to fetch the details of a sake shop by name.
+ */
 @HiltViewModel
-<span class="fc" id="L14">class SakeShopDetailsViewModel @Inject constructor(</span>
-<span class="fc" id="L15">    private val getSakeShopDetailsUseCase: GetSakeShopDetailsUseCase</span>
-<span class="fc" id="L16">) : ViewModel() {</span>
+<span class="fc" id="L19">class SakeShopDetailsViewModel @Inject constructor(</span>
+<span class="fc" id="L20">    private val getSakeShopDetailsUseCase: GetSakeShopDetailsUseCase</span>
+<span class="fc" id="L21">) : ViewModel() {</span>
 
-<span class="fc" id="L18">    private val _uiState = MutableStateFlow(SakeShopDetailsUiState())</span>
-<span class="fc" id="L19">    val uiState: StateFlow&lt;SakeShopDetailsUiState&gt; = _uiState.asStateFlow()</span>
+<span class="fc" id="L23">    private val _uiState = MutableStateFlow(SakeShopDetailsUiState())</span>
+    /**
+     * Exposes the UI state as a read-only [StateFlow].
+     */
+<span class="fc" id="L27">    val uiState: StateFlow&lt;SakeShopDetailsUiState&gt; = _uiState.asStateFlow()</span>
 
+    /**
+     * Loads the details of a sake shop given its [shopName].
+     *
+     * Updates the UI state to loading before fetching data.
+     * On success, updates the state with the fetched sake shop details.
+     * On failure, updates the state with an error message.
+     *
+     * @param shopName The name of the sake shop to load details for.
+     */
     fun loadSakeShopDetails(shopName: String) {
-<span class="pc" id="L22">        viewModelScope.launch {</span>
-<span class="fc" id="L23">            _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)</span>
+<span class="pc" id="L39">        viewModelScope.launch {</span>
+<span class="fc" id="L40">            _uiState.value = _uiState.value.copy(isLoading = true, errorMessage = null)</span>
 
-<span class="pc bpc" id="L25" title="1 of 2 branches missed.">            getSakeShopDetailsUseCase(shopName)</span>
-<span class="fc bfc" id="L26" title="All 2 branches covered.">                .onSuccess { sakeShop -&gt;</span>
-<span class="fc" id="L27">                    _uiState.value = _uiState.value.copy(</span>
-<span class="fc" id="L28">                        isLoading = false,</span>
-<span class="fc" id="L29">                        sakeShop = sakeShop</span>
+<span class="pc bpc" id="L42" title="1 of 2 branches missed.">            getSakeShopDetailsUseCase(shopName)</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">                .onSuccess { sakeShop -&gt;</span>
+<span class="fc" id="L44">                    _uiState.value = _uiState.value.copy(</span>
+<span class="fc" id="L45">                        isLoading = false,</span>
+<span class="fc" id="L46">                        sakeShop = sakeShop</span>
                     )
-<span class="fc" id="L31">                }</span>
-<span class="fc bfc" id="L32" title="All 2 branches covered.">                .onFailure { exception -&gt;</span>
-<span class="fc" id="L33">                    _uiState.value = _uiState.value.copy(</span>
-<span class="fc" id="L34">                        isLoading = false,</span>
-<span class="fc bfc" id="L35" title="All 2 branches covered.">                        errorMessage = exception.message ?: &quot;Unknown error occurred&quot;</span>
+<span class="fc" id="L48">                }</span>
+<span class="fc bfc" id="L49" title="All 2 branches covered.">                .onFailure { exception -&gt;</span>
+<span class="fc" id="L50">                    _uiState.value = _uiState.value.copy(</span>
+<span class="fc" id="L51">                        isLoading = false,</span>
+<span class="fc bfc" id="L52" title="All 2 branches covered.">                        errorMessage = exception.message ?: &quot;Unknown error occurred&quot;</span>
                     )
-<span class="fc" id="L37">                }</span>
-<span class="fc" id="L38">        }</span>
-<span class="fc" id="L39">    }</span>
+<span class="fc" id="L54">                }</span>
+<span class="fc" id="L55">        }</span>
+<span class="fc" id="L56">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

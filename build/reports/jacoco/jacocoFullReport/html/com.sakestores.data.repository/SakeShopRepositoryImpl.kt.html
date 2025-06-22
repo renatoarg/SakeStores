@@ -6,18 +6,36 @@ import com.sakestores.domain.model.SakeShop
 import com.sakestores.domain.repository.SakeShopRepository
 import javax.inject.Inject
 
-<span class="fc" id="L9">class SakeShopRepositoryImpl @Inject constructor(</span>
-<span class="fc" id="L10">    private val dataSource: SakeShopDataSource</span>
+/**
+ * Implementation of [SakeShopRepository] that fetches data from [SakeShopDataSource]
+ * and maps the data transfer objects to domain models.
+ *
+ * @property dataSource The data source providing sake shop data.
+ */
+<span class="fc" id="L15">class SakeShopRepositoryImpl @Inject constructor(</span>
+<span class="fc" id="L16">    private val dataSource: SakeShopDataSource</span>
 ): SakeShopRepository {
-<span class="nc" id="L12">    override suspend fun getSakeShops(): Result&lt;List&lt;SakeShop&gt;&gt; {</span>
-<span class="pc bpc" id="L13" title="1 of 4 branches missed.">        return dataSource.getSakeShops().mapCatching { dtos -&gt;</span>
-<span class="fc" id="L14">            dtos.toDomain()</span>
+
+    /**
+     * Retrieves a list of sake shops from the data source and maps them to domain models.
+     *
+     * @return Result wrapping a list of [SakeShop] on success, or an exception on failure.
+     */
+<span class="nc" id="L24">    override suspend fun getSakeShops(): Result&lt;List&lt;SakeShop&gt;&gt; {</span>
+<span class="pc bpc" id="L25" title="1 of 4 branches missed.">        return dataSource.getSakeShops().mapCatching { dtos -&gt;</span>
+<span class="fc" id="L26">            dtos.toDomain()</span>
         }
     }
 
-<span class="nc" id="L18">    override suspend fun getSakeShopByName(name: String): Result&lt;SakeShop?&gt; {</span>
-<span class="pc bpc" id="L19" title="1 of 4 branches missed.">        return dataSource.getSakeShopByName(name).mapCatching { dto -&gt;</span>
-<span class="fc bfc" id="L20" title="All 2 branches covered.">            dto?.toDomain()</span>
+    /**
+     * Retrieves a single sake shop by its name from the data source and maps it to a domain model.
+     *
+     * @param name The name of the sake shop to retrieve.
+     * @return Result wrapping the [SakeShop] if found, null if not found, or an exception on failure.
+     */
+<span class="nc" id="L36">    override suspend fun getSakeShopByName(name: String): Result&lt;SakeShop?&gt; {</span>
+<span class="pc bpc" id="L37" title="1 of 4 branches missed.">        return dataSource.getSakeShopByName(name).mapCatching { dto -&gt;</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">            dto?.toDomain()</span>
         }
     }
 }

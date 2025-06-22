@@ -5,6 +5,7 @@ plugins {
     alias(libs.plugins.dagger.hilt.android)
     id("kotlin-parcelize")
     id("jacoco")
+    alias(libs.plugins.dokka)
 }
 
 android {

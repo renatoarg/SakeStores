@@ -8,6 +8,7 @@ import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -49,6 +50,24 @@ import com.sakestores.design_system.theme.SakeSecondary
 import com.sakestores.design_system.theme.SakeStoresTheme
 import com.sakestores.domain.model.SakeShop
 
+/**
+ * Composable function that displays detailed content for a [SakeShop] within a shared transition scope.
+ *
+ * This layout includes:
+ * - A header image with shared transition effect.
+ * - Sake shop name with shared transition effect.
+ * - Rating display with star icon.
+ * - Description of the sake shop.
+ * - Address section with location icon and coordinates.
+ * - Action buttons for opening location in maps and visiting the website.
+ *
+ * @param sakeShop The data model representing the sake shop details to display.
+ * @param modifier Optional [Modifier] for styling this composable.
+ * @param onMapsClick Lambda called with the Google Maps URL when the "Open in Maps" button is clicked.
+ * @param onWebsiteClick Lambda called with the website URL when the "Visit Website" button is clicked.
+ * @param animatedVisibilityScope The [AnimatedVisibilityScope] used for shared transition animation.
+ * @param onBackClick Lambda called when a back action is triggered (not used in the current UI).
+ */
 @Composable
 fun SharedTransitionScope.SakeShopDetailsContent(
     sakeShop: SakeShop,
@@ -133,7 +152,8 @@ fun SharedTransitionScope.SakeShopDetailsContent(
         Card(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 16.dp)
+                .clickable { onMapsClick(sakeShop.googleMapsLink) },
             elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         ) {
             Column(
@@ -161,12 +181,6 @@ fun SharedTransitionScope.SakeShopDetailsContent(
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-
-                Text(
-                    text = "Coordinates: ${sakeShop.coordinates[0]}, ${sakeShop.coordinates[1]}",
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
             }
         }
 
@@ -177,13 +191,6 @@ fun SharedTransitionScope.SakeShopDetailsContent(
                 .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Button(
-                onClick = { onMapsClick(sakeShop.googleMapsLink) },
-                modifier = Modifier.weight(1f)
-            ) {
-                Text("Open in Maps")
-            }
-
             OutlinedButton(
                 onClick = { onWebsiteClick(sakeShop.website) },
                 modifier = Modifier.weight(1f)
@@ -194,6 +201,9 @@ fun SharedTransitionScope.SakeShopDetailsContent(
     }
 }
 
+/**
+ * Preview of [SakeShopDetailsContent] in light theme with sample data.
+ */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true, backgroundColor = 0xFFFFFBF5)
 @Composable
@@ -221,6 +231,9 @@ private fun SakeShopDetailsContentPreview() {
     }
 }
 
+/**
+ * Preview of [SakeShopDetailsContent] in dark theme with sample data.
+ */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true, backgroundColor = 0xFFFFFBF5)
 @Composable
@@ -248,6 +261,9 @@ private fun SakeShopDetailsContentDarkPreview() {
     }
 }
 
+/**
+ * Preview of [SakeShopDetailsContent] with long text description and light theme.
+ */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true, backgroundColor = 0xFFFFFBF5, heightDp = 800)
 @Composable
@@ -275,6 +291,9 @@ private fun SakeShopDetailsContentLongTextPreview() {
     }
 }
 
+/**
+ * Compact width preview of [SakeShopDetailsContent].
+ */
 @OptIn(ExperimentalSharedTransitionApi::class)
 @Preview(showBackground = true, backgroundColor = 0xFFFFFBF5, widthDp = 320, heightDp = 600)
 @Composable
@@ -302,41 +321,29 @@ private fun SakeShopDetailsContentCompactPreview() {
     }
 }
 
-private fun sampleDetailedSakeShop() = SakeShop(
-    name = "Hakutsuru Sake Museum Store",
-    picture = "https://images.unsplash.com/photo-1578662996442-48f60103fc96?w=800",
-    description = "Experience authentic Japanese sake culture at our traditional store located in the heart of Kyoto. We offer a carefully curated selection of premium sake from renowned breweries across Japan, featuring both traditional and modern brewing techniques.",
+/**
+ * Provides a sample [SakeShop] instance with typical data.
+ */
+private fun sampleDetailedSakeShop(): SakeShop = SakeShop(
+    name = "Sake House Tokyo",
+    picture = "https://example.com/sakehouse.jpg",
+    description = "Authentic sake experience from the heart of Tokyo with a wide selection and expert guidance.",
     rating = 4.8f,
-    address = "2-1-1 Nishiki, Naka-ku, Kyoto 604-8031, Japan",
-    coordinates = listOf(35.0042, 135.7695),
-    googleMapsLink = "https://maps.google.com/?q=35.0042,135.7695",
-    website = "https://hakutsuru-sake.com"
+    address = "123 Tokyo Street, Tokyo, Japan",
+    coordinates = listOf(35.6895, 139.6917),
+    googleMapsLink = "https://maps.google.com/?q=35.6895,139.6917",
+    website = "https://sakehousetokyo.example.com"
 )
 
-private fun sampleDetailedSakeShopLongText() = SakeShop(
-    name = "Traditional Artisan Sake Brewery & Heritage Store with Centuries of History",
-    picture = "https://images.unsplash.com/photo-1569880153113-3b31f8ad7bbc?w=800",
-    description = "Our family-owned sake brewery has been crafting exceptional sake for over 400 years, passing down traditional brewing techniques through 15 generations. Located in the historic district of Fushimi, we specialize in junmai daiginjo and premium aged sake varieties. Our store features a tasting room where visitors can experience the full range of our sake portfolio, guided by our master brewers who share the secrets and stories behind each unique blend. We also offer traditional sake ceremony experiences and educational workshops about the intricate process of sake brewing, from rice selection to fermentation and aging.",
-    rating = 4.9f,
-    address = "123-45 Fushimi Momoyama-cho, Fushimi-ku, Kyoto 612-8039, Japan - Traditional Sake District, Historical Preservation Area",
-    coordinates = listOf(34.9388, 135.7647),
-    googleMapsLink = "https://maps.google.com/?q=34.9388,135.7647",
-    website = "https://traditional-artisan-sake-brewery.co.jp"
-)
-
-private fun sampleDetailedSakeShop(
-    name: String = "Sample Sake Store",
-    rating: Float = 4.5f,
-    description: String = "A wonderful sake store with great selection.",
-    address: String = "Tokyo, Japan",
-    imageUrl: String = "https://images.unsplash.com/photo-1578418166097-fe11b13f8c34?w=800"
-) = SakeShop(
-    name = name,
-    picture = imageUrl,
-    description = description,
-    rating = rating,
-    address = address,
-    coordinates = listOf(35.6762, 139.6503),
-    googleMapsLink = "https://maps.google.com/?q=35.6762,139.6503",
-    website = "https://example-sake-store.com"
+/**
+ * Provides a sample [SakeShop] with an extended long description for testing scrolling.
+ */
+private fun sampleDetailedSakeShopLongText(): SakeShop = sampleDetailedSakeShop().copy(
+    description = """
+        Authentic sake experience from the heart of Tokyo with a wide selection and expert guidance.
+        Our sake is sourced from the finest breweries, featuring rare and exclusive labels.
+        Enjoy tasting sessions, sake pairing with traditional dishes, and cultural events hosted regularly.
+        Whether you are a beginner or a connoisseur, Sake House Tokyo offers a unique and memorable journey.
+        Visit us to explore the rich heritage of sake craftsmanship and modern innovations in brewing.
+    """.trimIndent()
 )

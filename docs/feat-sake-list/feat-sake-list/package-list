@@ -1,0 +1,18 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.sakestores.feat_sake_list.presentation////PointingToDeclaration/feat-sake-list/com.sakestores.feat_sake_list.presentation/index.html
+$dokka.location:com.sakestores.feat_sake_list.presentation/SakeShopsListUiState///PointingToDeclaration/feat-sake-list/com.sakestores.feat_sake_list.presentation/-sake-shops-list-ui-state/index.html
+$dokka.location:com.sakestores.feat_sake_list.presentation/SakeShopsListUiState/SakeShopsListUiState/#kotlin.Boolean#kotlin.collections.List[com.sakestores.domain.model.SakeShop]#kotlin.String?/PointingToDeclaration/feat-sake-list/com.sakestores.feat_sake_list.presentation/-sake-shops-list-ui-state/-sake-shops-list-ui-state.html
+$dokka.location:com.sakestores.feat_sake_list.presentation/SakeShopsListUiState/errorMessage/#/PointingToDeclaration/feat-sake-list/com.sakestores.feat_sake_list.presentation/-sake-shops-list-ui-state/error-message.html
+$dokka.location:com.sakestores.feat_sake_list.presentation/SakeShopsListUiState/isLoading/#/PointingToDeclaration/feat-sake-list/com.sakestores.feat_sake_list.presentation/-sake-shops-list-ui-state/is-loading.html
+$dokka.location:com.sakestores.feat_sake_list.presentation/SakeShopsListUiState/sakeShops/#/PointingToDeclaration/feat-sake-list/com.sakestores.feat_sake_list.presentation/-sake-shops-list-ui-state/sake-shops.html
+$dokka.location:com.sakestores.feat_sake_list.presentation/SakeShopsListViewModel///PointingToDeclaration/feat-sake-list/com.sakestores.feat_sake_list.presentation/-sake-shops-list-view-model/index.html
+$dokka.location:com.sakestores.feat_sake_list.presentation/SakeShopsListViewModel/SakeShopsListViewModel/#com.sakestores.domain.usecase.GetSakeShopsUseCase/PointingToDeclaration/feat-sake-list/com.sakestores.feat_sake_list.presentation/-sake-shops-list-view-model/-sake-shops-list-view-model.html
+$dokka.location:com.sakestores.feat_sake_list.presentation/SakeShopsListViewModel/loadSakeShops/#/PointingToDeclaration/feat-sake-list/com.sakestores.feat_sake_list.presentation/-sake-shops-list-view-model/load-sake-shops.html
+$dokka.location:com.sakestores.feat_sake_list.presentation/SakeShopsListViewModel/uiState/#/PointingToDeclaration/feat-sake-list/com.sakestores.feat_sake_list.presentation/-sake-shops-list-view-model/ui-state.html
+$dokka.location:com.sakestores.feat_sake_list.ui////PointingToDeclaration/feat-sake-list/com.sakestores.feat_sake_list.ui/index.html
+$dokka.location:com.sakestores.feat_sake_list.ui//SakeShopCard/androidx.compose.animation.SharedTransitionScope#com.sakestores.domain.model.SakeShop#kotlin.Function0[kotlin.Unit]#androidx.compose.animation.AnimatedVisibilityScope#androidx.compose.ui.Modifier/PointingToDeclaration/feat-sake-list/com.sakestores.feat_sake_list.ui/-sake-shop-card.html
+$dokka.location:com.sakestores.feat_sake_list.ui//SakeShopsListScreen/androidx.compose.animation.SharedTransitionScope#androidx.compose.animation.AnimatedVisibilityScope#kotlin.Function1[kotlin.String,kotlin.Unit]#com.sakestores.feat_sake_list.presentation.SakeShopsListViewModel/PointingToDeclaration/feat-sake-list/com.sakestores.feat_sake_list.ui/-sake-shops-list-screen.html
+com.sakestores.feat_sake_list.presentation
+com.sakestores.feat_sake_list.ui
+

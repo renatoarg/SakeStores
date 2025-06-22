@@ -6,18 +6,26 @@ import java.net.URLDecoder
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
+/**
+ * Integration tests for navigation parameter encoding and decoding flow
+ * involving sake shop names in navigation routes.
+ *
+ * These tests verify that shop names are correctly encoded when inserted into
+ * navigation routes, decoded properly when extracted, and that navigation logic
+ * behaves as expected for various input scenarios and edge cases.
+ */
 class SakeShopsIntegrationTest {
 
     @Test
     fun `navigation parameter flow should work end to end`() {
-        // Given - simulação do flow: List → Details
+        // Given
         val originalShopName = "Test Sake Shop & Co"
 
-        // When - simula click no item da lista
+        // When
         val encodedForNavigation = URLEncoder.encode(originalShopName, StandardCharsets.UTF_8.toString())
         val navigationRoute = "sake_shop_details/$encodedForNavigation"
 
-        // Then - simula extração na tela de details
+        // Then
         val extractedEncoded = navigationRoute.substringAfter("sake_shop_details/")
         val finalShopName = URLDecoder.decode(extractedEncoded, StandardCharsets.UTF_8.toString())
 
@@ -27,18 +35,18 @@ class SakeShopsIntegrationTest {
 
     @Test
     fun `complete navigation flow with multiple shop names`() {
-        // Given - diferentes tipos de nomes de shops
+        // Given
         val shopNames = listOf(
             "Simple Shop",
             "Shop & Restaurant",
             "Shop/Bar + Brewery",
-            "日本酒専門店", // Japanese
+            "日本酒専門店",
             "Shop with 100% sake",
             "Multi Word Sake Shop Name"
         )
 
         shopNames.forEach { originalName ->
-            // When - simula todo o flow
+            // When
             val encoded = URLEncoder.encode(originalName, StandardCharsets.UTF_8.toString())
             val route = "sake_shop_details/$encoded"
             val extractedParam = route.substringAfter("sake_shop_details/")
@@ -51,10 +59,10 @@ class SakeShopsIntegrationTest {
 
     @Test
     fun `back navigation flow should work correctly`() {
-        // Given - user está na details screen
+        // Given
         val currentRoute = "sake_shop_details/Test%20Shop"
 
-        // When - simula back navigation
+        // When
         val shouldNavigateBack = currentRoute.startsWith("sake_shop_details")
         val backDestination = "sake_shops_list"
 
@@ -65,11 +73,11 @@ class SakeShopsIntegrationTest {
 
     @Test
     fun `route parsing edge cases should be handled`() {
-        // Given - edge cases com comportamento real do URLEncoder
+        // Given
         val testCases = listOf(
             "" to "",
             "test" to "test",
-            "test shop" to "test+shop" // espaço vira +
+            "test shop" to "test+shop"
         )
 
         testCases.forEach { (shopName, expectedEncoded) ->
@@ -77,7 +85,7 @@ class SakeShopsIntegrationTest {
             val encoded = URLEncoder.encode(shopName, StandardCharsets.UTF_8.toString())
             val route = "sake_shop_details/$encoded"
 
-            // Then - teste o que realmente acontece
+            // Then
             val extractedParam = route.substringAfter("sake_shop_details/")
             val decoded = URLDecoder.decode(extractedParam, StandardCharsets.UTF_8.toString())
 
@@ -91,7 +99,7 @@ class SakeShopsIntegrationTest {
 
     @Test
     fun `start destination should be correct`() {
-        // Given - app initialization
+        // Given
         val startDestination = "sake_shops_list"
 
         // When - verify navigation setup
@@ -103,17 +111,17 @@ class SakeShopsIntegrationTest {
 
     @Test
     fun `route parameter roundtrip should work for edge cases`() {
-        // Given - casos edge importantes
+        // Given
         val edgeCases = listOf("", " ", "test", "test shop", "test&shop")
 
         edgeCases.forEach { originalName ->
-            // When - simula o flow completo
+            // When
             val encoded = URLEncoder.encode(originalName, StandardCharsets.UTF_8.toString())
             val route = "sake_shop_details/$encoded"
             val extractedParam = route.substringAfter("sake_shop_details/")
             val decoded = URLDecoder.decode(extractedParam, StandardCharsets.UTF_8.toString())
 
-            // Then - o importante é o roundtrip funcionar
+            // Then
             assertEquals("Roundtrip failed for: '$originalName'", originalName, decoded)
         }
     }

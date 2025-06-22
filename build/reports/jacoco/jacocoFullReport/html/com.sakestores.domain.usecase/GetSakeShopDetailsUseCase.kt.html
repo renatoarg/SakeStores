@@ -4,11 +4,22 @@ import com.sakestores.domain.model.SakeShop
 import com.sakestores.domain.repository.SakeShopRepository
 import javax.inject.Inject
 
-<span class="nc" id="L7">class GetSakeShopDetailsUseCase @Inject constructor(</span>
-<span class="nc" id="L8">    private val repository: SakeShopRepository</span>
+/**
+ * Use case to fetch details of a specific [SakeShop] by its name.
+ *
+ * @property repository The [SakeShopRepository] used to fetch the data.
+ */
+<span class="nc" id="L12">class GetSakeShopDetailsUseCase @Inject constructor(</span>
+<span class="nc" id="L13">    private val repository: SakeShopRepository</span>
 ) {
-<span class="nc" id="L10">    suspend operator fun invoke(shopName: String): Result&lt;SakeShop?&gt; {</span>
-<span class="nc bnc" id="L11" title="All 2 branches missed.">        return repository.getSakeShopByName(shopName)</span>
+    /**
+     * Invokes the use case to get the details of a sake shop.
+     *
+     * @param shopName The name of the sake shop to retrieve.
+     * @return A [Result] wrapping the [SakeShop] if found, or null if not found, or an error on failure.
+     */
+<span class="nc" id="L21">    suspend operator fun invoke(shopName: String): Result&lt;SakeShop?&gt; {</span>
+<span class="nc bnc" id="L22" title="All 2 branches missed.">        return repository.getSakeShopByName(shopName)</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

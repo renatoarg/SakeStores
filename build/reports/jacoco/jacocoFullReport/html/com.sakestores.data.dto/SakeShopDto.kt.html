@@ -3,16 +3,28 @@
 import com.google.gson.annotations.SerializedName
 import kotlinx.serialization.Serializable
 
-<span class="pc bnc" id="L6" title="All 14 branches missed.">@Serializable</span>
-<span class="fc" id="L7">data class SakeShopDto(</span>
-<span class="fc" id="L8">    val name: String,</span>
-<span class="fc" id="L9">    val description: String,</span>
-<span class="fc" id="L10">    val picture: String?,</span>
-<span class="fc" id="L11">    val rating: Float,</span>
-<span class="fc" id="L12">    val address: String,</span>
-<span class="fc" id="L13">    val coordinates: List&lt;Double&gt;,</span>
-<span class="fc" id="L14">    @SerializedName(&quot;google_maps_link&quot;)</span>
-<span class="fc" id="L15">    val googleMapsLink: String,</span>
-<span class="fc" id="L16">    val website: String</span>
-<span class="nc" id="L17">)</span>
+/**
+ * Data Transfer Object representing a sake shop.
+ *
+ * @property name The name of the sake shop.
+ * @property description A brief description of the sake shop.
+ * @property picture Optional URL or path to the picture of the sake shop.
+ * @property rating The rating of the sake shop, typically on a scale (e.g., 0 to 5).
+ * @property address The physical address of the sake shop.
+ * @property coordinates The geographical coordinates of the shop as a list of two Doubles: latitude and longitude.
+ * @property googleMapsLink A URL linking to the shop location on Google Maps.
+ * @property website The official website URL of the sake shop.
+ */
+<span class="pc bnc" id="L18" title="All 14 branches missed.">@Serializable</span>
+<span class="fc" id="L19">data class SakeShopDto(</span>
+<span class="fc" id="L20">    val name: String,</span>
+<span class="fc" id="L21">    val description: String,</span>
+<span class="fc" id="L22">    val picture: String?,</span>
+<span class="fc" id="L23">    val rating: Float,</span>
+<span class="fc" id="L24">    val address: String,</span>
+<span class="fc" id="L25">    val coordinates: List&lt;Double&gt;,</span>
+<span class="fc" id="L26">    @SerializedName(&quot;google_maps_link&quot;)</span>
+<span class="fc" id="L27">    val googleMapsLink: String,</span>
+<span class="fc" id="L28">    val website: String</span>
+<span class="nc" id="L29">)</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

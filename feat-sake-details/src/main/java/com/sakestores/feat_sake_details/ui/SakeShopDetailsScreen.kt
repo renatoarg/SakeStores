@@ -37,6 +37,18 @@ import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sakestores.feat_sake_details.presentation.SakeShopDetailsViewModel
 
+/**
+ * Tela de detalhes da loja de saquê que utiliza transições compartilhadas
+ * para animar elementos entre a lista e a tela de detalhes.
+ *
+ * Exibe estados de carregamento, erro e sucesso com detalhes da loja.
+ * Possui botão de voltar na barra superior, ações para abrir links de mapas e website.
+ *
+ * @param animatedVisibilityScope Escopo para animações de visibilidade compartilhada.
+ * @param shopName Nome da loja de saquê para carregar os detalhes.
+ * @param onBackClick Lambda executado ao clicar no botão de voltar.
+ * @param viewModel ViewModel responsável por gerenciar o estado da UI, padrão Hilt.
+ */
 @Composable
 fun SharedTransitionScope.SakeShopDetailsScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,

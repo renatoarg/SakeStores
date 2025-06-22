@@ -1,0 +1,20 @@
+$dokka.format:html-v1
+$dokka.linkExtension:html
+$dokka.location:com.sakestores.android.ui.theme////PointingToDeclaration/app/com.sakestores.android.ui.theme/index.html
+$dokka.location:com.sakestores.android.ui.theme//Pink40/#/PointingToDeclaration/app/com.sakestores.android.ui.theme/-pink40.html
+$dokka.location:com.sakestores.android.ui.theme//Pink80/#/PointingToDeclaration/app/com.sakestores.android.ui.theme/-pink80.html
+$dokka.location:com.sakestores.android.ui.theme//Purple40/#/PointingToDeclaration/app/com.sakestores.android.ui.theme/-purple40.html
+$dokka.location:com.sakestores.android.ui.theme//Purple80/#/PointingToDeclaration/app/com.sakestores.android.ui.theme/-purple80.html
+$dokka.location:com.sakestores.android.ui.theme//PurpleGrey40/#/PointingToDeclaration/app/com.sakestores.android.ui.theme/-purple-grey40.html
+$dokka.location:com.sakestores.android.ui.theme//PurpleGrey80/#/PointingToDeclaration/app/com.sakestores.android.ui.theme/-purple-grey80.html
+$dokka.location:com.sakestores.android.ui.theme//SakeStoresTheme/#kotlin.Boolean#kotlin.Boolean#kotlin.Function0[kotlin.Unit]/PointingToDeclaration/app/com.sakestores.android.ui.theme/-sake-stores-theme.html
+$dokka.location:com.sakestores.android.ui.theme//Typography/#/PointingToDeclaration/app/com.sakestores.android.ui.theme/-typography.html
+$dokka.location:com.sakestores.android////PointingToDeclaration/app/com.sakestores.android/index.html
+$dokka.location:com.sakestores.android//SakeStores/#androidx.compose.ui.Modifier#androidx.navigation.NavHostController/PointingToDeclaration/app/com.sakestores.android/-sake-stores.html
+$dokka.location:com.sakestores.android/MainActivity///PointingToDeclaration/app/com.sakestores.android/-main-activity/index.html
+$dokka.location:com.sakestores.android/MainActivity/MainActivity/#/PointingToDeclaration/app/com.sakestores.android/-main-activity/-main-activity.html
+$dokka.location:com.sakestores.android/SakeStoresApplication///PointingToDeclaration/app/com.sakestores.android/-sake-stores-application/index.html
+$dokka.location:com.sakestores.android/SakeStoresApplication/SakeStoresApplication/#/PointingToDeclaration/app/com.sakestores.android/-sake-stores-application/-sake-stores-application.html
+com.sakestores.android
+com.sakestores.android.ui.theme
+

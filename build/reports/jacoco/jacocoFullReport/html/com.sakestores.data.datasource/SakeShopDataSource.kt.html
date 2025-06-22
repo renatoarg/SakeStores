@@ -9,25 +9,48 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-<span class="fc" id="L12">class SakeShopDataSource @Inject constructor(</span>
-<span class="fc" id="L13">    @ApplicationContext private val context: Context,</span>
-<span class="fc" id="L14">    private val gson: Gson</span>
+/**
+ * Data source responsible for loading sake shop data from local assets.
+ *
+ * This class uses Gson to parse JSON data stored in the app's assets folder.
+ * It provides suspend functions to asynchronously fetch the list of sake shops
+ * or retrieve a specific sake shop by its name.
+ *
+ * @property context The Android application context injected via Hilt.
+ * @property gson Gson instance for JSON parsing.
+ */
+<span class="fc" id="L22">class SakeShopDataSource @Inject constructor(</span>
+<span class="fc" id="L23">    @ApplicationContext private val context: Context,</span>
+<span class="fc" id="L24">    private val gson: Gson</span>
 ) {
 
-<span class="pc bpc" id="L17" title="1 of 2 branches missed.">    suspend fun getSakeShops(): Result&lt;List&lt;SakeShopDto&gt;&gt; = withContext(Dispatchers.IO) {</span>
-<span class="fc" id="L18">        try {</span>
-<span class="pc bpc" id="L19" title="1 of 2 branches missed.">            val json = context.assets.open(&quot;sake_shops.json&quot;).bufferedReader().use { it.readText() }</span>
-<span class="fc" id="L20">            val listType = object : TypeToken&lt;List&lt;SakeShopDto&gt;&gt;() {}.type</span>
-<span class="fc" id="L21">            val sakeShops = gson.fromJson&lt;List&lt;SakeShopDto&gt;&gt;(json, listType)</span>
-<span class="fc" id="L22">            Result.success(sakeShops)</span>
-<span class="fc" id="L23">        } catch (e: Exception) {</span>
-<span class="fc" id="L24">            Result.failure(e)</span>
+    /**
+     * Loads the list of sake shops from the local JSON asset file asynchronously.
+     *
+     * @return A [Result] wrapping a list of [SakeShopDto] on success, or an exception on failure.
+     */
+<span class="pc bpc" id="L32" title="1 of 2 branches missed.">    suspend fun getSakeShops(): Result&lt;List&lt;SakeShopDto&gt;&gt; = withContext(Dispatchers.IO) {</span>
+<span class="fc" id="L33">        try {</span>
+<span class="pc bpc" id="L34" title="1 of 2 branches missed.">            val json = context.assets.open(&quot;sake_shops.json&quot;).bufferedReader().use { it.readText() }</span>
+<span class="fc" id="L35">            val listType = object : TypeToken&lt;List&lt;SakeShopDto&gt;&gt;() {}.type</span>
+<span class="fc" id="L36">            val sakeShops = gson.fromJson&lt;List&lt;SakeShopDto&gt;&gt;(json, listType)</span>
+<span class="fc" id="L37">            Result.success(sakeShops)</span>
+<span class="fc" id="L38">        } catch (e: Exception) {</span>
+<span class="fc" id="L39">            Result.failure(e)</span>
         }
-<span class="fc" id="L26">    }</span>
+<span class="fc" id="L41">    }</span>
 
-<span class="fc" id="L28">    suspend fun getSakeShopByName(name: String): Result&lt;SakeShopDto?&gt; {</span>
-<span class="pc bpc" id="L29" title="2 of 4 branches missed.">        return getSakeShops().mapCatching { shops -&gt;</span>
-<span class="fc bfc" id="L30" title="All 4 branches covered.">            shops.find { it.name == name }</span>
+    /**
+     * Retrieves a sake shop by its exact name asynchronously.
+     *
+     * This function fetches all sake shops and then finds the one matching the given name.
+     *
+     * @param name The exact name of the sake shop to find.
+     * @return A [Result] wrapping the found [SakeShopDto] or null if not found, or an exception on failure.
+     */
+<span class="fc" id="L51">    suspend fun getSakeShopByName(name: String): Result&lt;SakeShopDto?&gt; {</span>
+<span class="pc bpc" id="L52" title="2 of 4 branches missed.">        return getSakeShops().mapCatching { shops -&gt;</span>
+<span class="fc bfc" id="L53" title="All 4 branches covered.">            shops.find { it.name == name }</span>
         }
     }
 }

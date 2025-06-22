@@ -33,6 +33,18 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
+/**
+ * Screen composable displaying a list of sake shops with support for shared element
+ * transitions and different UI states: loading, error, and success.
+ *
+ * The screen uses a [Scaffold] with a top app bar titled "Sake Stores". Depending on the
+ * [uiState] from the [viewModel], it shows a loading indicator, an error message with
+ * retry button, or the list of sake shops.
+ *
+ * @param animatedVisibilityScope The [AnimatedVisibilityScope] used to coordinate shared element animations.
+ * @param onSakeShopClick Callback invoked when a sake shop item is clicked, providing the sake shop's name.
+ * @param viewModel The [SakeShopsListViewModel] instance providing UI state. Defaults to a Hilt-injected ViewModel.
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SharedTransitionScope.SakeShopsListScreen(
@@ -100,9 +112,7 @@ fun SharedTransitionScope.SakeShopsListScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .padding(paddingValues)
-                        .testTag("success_state"),
-                    contentPadding = PaddingValues(top = 16.dp),
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                        .testTag("success_state")
                 ) {
                     items(uiState.sakeShops) { sakeShop ->
                         SakeShopCard(

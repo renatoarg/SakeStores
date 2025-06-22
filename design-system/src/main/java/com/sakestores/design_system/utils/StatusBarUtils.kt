@@ -13,9 +13,10 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 
 /**
- * Configura a cor da status bar
- * @param color Cor da status bar (padrão: cor primária do tema)
- * @param darkIcons Se os ícones devem ser escuros (calculado automaticamente baseado na luminância)
+ * Composable function to set the status bar color and icon appearance.
+ *
+ * @param color The color to set the status bar. Defaults to [MaterialTheme.colorScheme.primaryContainer].
+ * @param darkIcons Whether the status bar icons should be dark. Defaults to true if [color] luminance is high.
  */
 @Composable
 fun StatusBarColor(
@@ -38,11 +39,12 @@ fun StatusBarColor(
 }
 
 /**
- * Configura tanto a status bar quanto a navigation bar
- * @param statusBarColor Cor da status bar
- * @param navigationBarColor Cor da navigation bar
- * @param darkStatusBarIcons Se os ícones da status bar devem ser escuros
- * @param darkNavigationBarIcons Se os ícones da navigation bar devem ser escuros
+ * Composable function to set both status bar and navigation bar colors and icon appearances.
+ *
+ * @param statusBarColor Color for the status bar. Defaults to [MaterialTheme.colorScheme.primaryContainer].
+ * @param navigationBarColor Color for the navigation bar. Defaults to [MaterialTheme.colorScheme.surface].
+ * @param darkStatusBarIcons Whether status bar icons should be dark. Defaults based on [statusBarColor] luminance.
+ * @param darkNavigationBarIcons Whether navigation bar icons should be dark. Defaults based on [navigationBarColor] luminance.
  */
 @Composable
 fun SystemBarColors(
@@ -58,11 +60,9 @@ fun SystemBarColors(
         SideEffect {
             val window = (context as Activity).window
 
-            // Configurar cores
             window.statusBarColor = statusBarColor.toArgb()
             window.navigationBarColor = navigationBarColor.toArgb()
 
-            // Configurar ícones
             WindowCompat.getInsetsController(window, view).let { controller ->
                 controller.isAppearanceLightStatusBars = darkStatusBarIcons
                 controller.isAppearanceLightNavigationBars = darkNavigationBarIcons
@@ -72,8 +72,9 @@ fun SystemBarColors(
 }
 
 /**
- * Torna a status bar transparente (para telas fullscreen)
- * @param darkIcons Se os ícones devem ser escuros
+ * Composable function to make the status bar transparent and optionally set icon color.
+ *
+ * @param darkIcons Whether the status bar icons should be dark. Defaults to true.
  */
 @Composable
 fun TransparentStatusBar(
@@ -95,8 +96,9 @@ fun TransparentStatusBar(
 }
 
 /**
- * Aplica estilo padrão do Sake Stores para as barras do sistema
- * @param isDarkTheme Se está no tema escuro
+ * Composable function to apply the SakeStores system bar style based on theme.
+ *
+ * @param isDarkTheme If true, applies dark theme colors; otherwise, applies light theme colors.
  */
 @Composable
 fun SakeSystemBars(
@@ -120,7 +122,7 @@ fun SakeSystemBars(
 }
 
 /**
- * Esconde a status bar (para telas verdadeiramente fullscreen)
+ * Composable function to hide the status bar and allow transient system bars to be shown by swipe.
  */
 @Composable
 fun HideStatusBar() {
@@ -140,7 +142,7 @@ fun HideStatusBar() {
 }
 
 /**
- * Mostra a status bar (reverter HideStatusBar)
+ * Composable function to show the status bar.
  */
 @Composable
 fun ShowStatusBar() {
@@ -159,8 +161,8 @@ fun ShowStatusBar() {
 }
 
 /**
- * Aplica edge-to-edge com padding automático
- * Útil para telas que devem ir até as bordas da tela
+ * Composable function to enable edge-to-edge mode with transparent status and navigation bars,
+ * and default dark icons for both bars.
  */
 @Composable
 fun EdgeToEdgeStatusBar() {
@@ -173,11 +175,11 @@ fun EdgeToEdgeStatusBar() {
 
             WindowCompat.setDecorFitsSystemWindows(window, false)
 
-            // Status bar transparente
+            // Set transparent status and navigation bars
             window.statusBarColor = Color.Transparent.toArgb()
             window.navigationBarColor = Color.Transparent.toArgb()
 
-            // Ícones escuros por padrão
+            // Default to dark icons on status and navigation bars
             WindowCompat.getInsetsController(window, view).let { controller ->
                 controller.isAppearanceLightStatusBars = true
                 controller.isAppearanceLightNavigationBars = true

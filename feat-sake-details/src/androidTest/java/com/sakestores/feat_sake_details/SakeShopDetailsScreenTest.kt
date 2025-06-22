@@ -4,6 +4,7 @@ package com.sakestores.feat_sake_details
 
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionLayout
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onNodeWithText
@@ -14,11 +15,26 @@ import com.sakestores.feat_sake_details.ui.SakeShopDetailsContent
 import org.junit.Rule
 import org.junit.Test
 
+/**
+ * Test suite for the [SakeShopDetailsContent] composable within
+ * a shared transition layout.
+ *
+ * This class contains UI tests verifying:
+ * - Rendering of UI elements with expected content.
+ * - Correct behavior of clickable buttons (maps, website).
+ * - Handling of edge cases such as extreme or low rating values.
+ * - Proper display of all textual components and their visibility.
+ */
 class SakeShopDetailsScreenTest {
 
+    /** Compose test rule to set up and control Compose testing environment */
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    /**
+     * Verifies that the [SakeShopDetailsContent] renders all expected
+     * UI elements correctly given a sample sake shop.
+     */
     @OptIn(ExperimentalSharedTransitionApi::class)
     @Test
     fun sakeShopDetailsContent_rendersCorrectly() {
@@ -70,6 +86,12 @@ class SakeShopDetailsScreenTest {
         composeTestRule.onNodeWithText("Visit Website")
             .assertIsDisplayed()
     }
+
+    /**
+     * Tests button interactions on the content, ensuring
+     * that clicking the maps and website buttons triggers
+     * the appropriate callbacks with correct URLs.
+     */
     @Test
     fun detailsContent_buttonInteractions() {
         val sampleShop = com.sakestores.domain.model.SakeShop(
@@ -119,6 +141,10 @@ class SakeShopDetailsScreenTest {
         }
     }
 
+    /**
+     * Validates that the UI correctly displays extreme values
+     * such as very long texts, boundary coordinates, and perfect rating.
+     */
     @Test
     fun detailsContent_handlesExtremeValues() {
         val extremeShop = com.sakestores.domain.model.SakeShop(
@@ -163,6 +189,9 @@ class SakeShopDetailsScreenTest {
             .assertIsDisplayed()
     }
 
+    /**
+     * Tests UI with a sake shop having a low rating.
+     */
     @Test
     fun detailsContent_lowRatingScenario() {
         val lowRatingShop = com.sakestores.domain.model.SakeShop(
@@ -201,6 +230,9 @@ class SakeShopDetailsScreenTest {
             .assertIsDisplayed()
     }
 
+    /**
+     * Tests UI with a sake shop having a perfect rating.
+     */
     @Test
     fun detailsContent_perfectRatingScenario() {
         val perfectShop = com.sakestores.domain.model.SakeShop(
@@ -237,5 +269,66 @@ class SakeShopDetailsScreenTest {
 
         composeTestRule.onNodeWithText("Perfect Address, Kyoto")
             .assertIsDisplayed()
+    }
+
+    /**
+     * Exercises all text components and interactions in the UI,
+     * verifying display and interaction callbacks for maps and website.
+     */
+    @Test
+    fun detailsContent_exercisesAllComponents() {
+        val fullShop = com.sakestores.domain.model.SakeShop(
+            name = "Complete Test Shop",
+            description = "Full description to exercise text components",
+            picture = "",
+            address = "Complete Address, Tokyo, Japan",
+            coordinates = listOf(35.6762, 139.6503),
+            googleMapsLink = "https://maps.google.com/complete",
+            website = "https://complete-shop.com",
+            rating = 3.7f
+        )
+
+        var mapsClicked = false
+        var websiteClicked = false
+
+        composeTestRule.setContent {
+            SharedTransitionLayout {
+                androidx.compose.animation.AnimatedVisibility(visible = true) {
+                    SakeShopDetailsContent(
+                        modifier = androidx.compose.ui.Modifier
+                            .testTag("complete_content")
+                            .fillMaxSize(),
+                        sakeShop = fullShop,
+                        onMapsClick = { mapsClicked = true },
+                        onWebsiteClick = { websiteClicked = true },
+                        onBackClick = { },
+                        animatedVisibilityScope = this
+                    )
+                }
+            }
+        }
+
+
+        composeTestRule.onNodeWithText("Complete Test Shop")
+            .assertIsDisplayed()
+
+        composeTestRule.onNodeWithText("Full description to exercise text components")
+            .assertIsDisplayed()
+
+        composeTestRule.onNodeWithText("3.7")
+            .assertIsDisplayed()
+
+        composeTestRule.onNodeWithText("Complete Address, Tokyo, Japan")
+            .assertIsDisplayed()
+
+        composeTestRule.onNodeWithText("Open in Maps")
+            .performClick()
+
+        assert(mapsClicked) { "Maps click callback not triggered" }
+
+        composeTestRule.onNodeWithText("Visit Website")
+            .performClick()
+
+        assert(websiteClicked) { "Website click callback not triggered" }
     }
 }

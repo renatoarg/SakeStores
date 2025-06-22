@@ -4,11 +4,21 @@ import com.sakestores.domain.model.SakeShop
 import com.sakestores.domain.repository.SakeShopRepository
 import javax.inject.Inject
 
-<span class="nc" id="L7">class GetSakeShopsUseCase @Inject constructor(</span>
-<span class="nc" id="L8">    private val repository: SakeShopRepository</span>
+/**
+ * Use case to fetch a list of all available [SakeShop]s.
+ *
+ * @property repository The [SakeShopRepository] used to retrieve the list.
+ */
+<span class="nc" id="L12">class GetSakeShopsUseCase @Inject constructor(</span>
+<span class="nc" id="L13">    private val repository: SakeShopRepository</span>
 ) {
-<span class="nc" id="L10">    suspend operator fun invoke(): Result&lt;List&lt;SakeShop&gt;&gt; {</span>
-<span class="nc bnc" id="L11" title="All 2 branches missed.">        return repository.getSakeShops()</span>
+    /**
+     * Invokes the use case to get the list of sake shops.
+     *
+     * @return A [Result] wrapping a list of [SakeShop] on success or an error on failure.
+     */
+<span class="nc" id="L20">    suspend operator fun invoke(): Result&lt;List&lt;SakeShop&gt;&gt; {</span>
+<span class="nc bnc" id="L21" title="All 2 branches missed.">        return repository.getSakeShops()</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
