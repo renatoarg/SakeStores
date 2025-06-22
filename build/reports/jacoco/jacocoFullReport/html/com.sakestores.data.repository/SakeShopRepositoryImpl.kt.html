@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SakeShopRepositoryImpl.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SakeStores</a> &gt; <a href="index.source.html" class="el_package">com.sakestores.data.repository</a> &gt; <span class="el_source">SakeShopRepositoryImpl.kt</span></div><h1>SakeShopRepositoryImpl.kt</h1><pre class="source lang-java linenums">package com.sakestores.data.repository
+
+import com.sakestores.data.datasource.SakeShopDataSource
+import com.sakestores.data.mapper.toDomain
+import com.sakestores.domain.model.SakeShop
+import com.sakestores.domain.repository.SakeShopRepository
+import javax.inject.Inject
+
+<span class="fc" id="L9">class SakeShopRepositoryImpl @Inject constructor(</span>
+<span class="fc" id="L10">    private val dataSource: SakeShopDataSource</span>
+): SakeShopRepository {
+<span class="nc" id="L12">    override suspend fun getSakeShops(): Result&lt;List&lt;SakeShop&gt;&gt; {</span>
+<span class="pc bpc" id="L13" title="1 of 4 branches missed.">        return dataSource.getSakeShops().mapCatching { dtos -&gt;</span>
+<span class="fc" id="L14">            dtos.toDomain()</span>
+        }
+    }
+
+<span class="nc" id="L18">    override suspend fun getSakeShopByName(name: String): Result&lt;SakeShop?&gt; {</span>
+<span class="pc bpc" id="L19" title="1 of 4 branches missed.">        return dataSource.getSakeShopByName(name).mapCatching { dto -&gt;</span>
+<span class="fc bfc" id="L20" title="All 2 branches covered.">            dto?.toDomain()</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>SakeShopDetailsScreen.kt</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">SakeStores</a> &gt; <a href="index.source.html" class="el_package">com.sakestores.feat_sake_details.ui</a> &gt; <span class="el_source">SakeShopDetailsScreen.kt</span></div><h1>SakeShopDetailsScreen.kt</h1><pre class="source lang-java linenums">@file:OptIn(ExperimentalSharedTransitionApi::class)
+
+package com.sakestores.feat_sake_details.ui
+
+import android.content.Intent
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Star
+import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
+import androidx.hilt.navigation.compose.hiltViewModel
+import coil.compose.AsyncImage
+import com.sakestores.domain.model.SakeShop
+
+@Composable
+fun SharedTransitionScope.SakeShopDetailsScreen(
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    shopName: String,
+    onBackClick: () -&gt; Unit,
+<span class="nc" id="L60">    viewModel: com.sakestores.feat_sake_details.presentation.SakeShopDetailsViewModel = hiltViewModel()</span>
+<span class="nc bnc" id="L61" title="All 2 branches missed.">) {</span>
+<span class="nc" id="L62">    val uiState by viewModel.uiState.collectAsState()</span>
+<span class="nc" id="L63">    val context = LocalContext.current</span>
+
+<span class="nc bnc" id="L65" title="All 2 branches missed.">    LaunchedEffect(shopName) {</span>
+<span class="nc" id="L66">        viewModel.loadSakeShopDetails(shopName)</span>
+<span class="nc" id="L67">    }</span>
+
+<span class="nc bnc" id="L69" title="All 4 branches missed.">    Scaffold() { paddingValues -&gt;</span>
+<span class="nc bnc" id="L70" title="All 6 branches missed.">        when {</span>
+<span class="nc bnc" id="L71" title="All 2 branches missed.">            uiState.isLoading -&gt; {</span>
+<span class="nc" id="L72">                Box(</span>
+<span class="nc" id="L73">                    modifier = Modifier</span>
+<span class="nc" id="L74">                        .fillMaxSize()</span>
+<span class="nc" id="L75">                        .padding(paddingValues),</span>
+<span class="nc" id="L76">                    contentAlignment = Alignment.Center</span>
+                ) {
+<span class="nc" id="L78">                    CircularProgressIndicator()</span>
+<span class="nc" id="L79">                }</span>
+            }
+
+<span class="nc bnc" id="L82" title="All 2 branches missed.">            uiState.errorMessage != null -&gt; {</span>
+<span class="nc" id="L83">                Box(</span>
+<span class="nc" id="L84">                    modifier = Modifier</span>
+<span class="nc" id="L85">                        .fillMaxSize()</span>
+<span class="nc" id="L86">                        .padding(paddingValues),</span>
+<span class="nc" id="L87">                    contentAlignment = Alignment.Center</span>
+                ) {
+<span class="nc" id="L89">                    Column(horizontalAlignment = Alignment.CenterHorizontally) {</span>
+<span class="nc" id="L90">                        Text(</span>
+<span class="nc" id="L91">                            text = &quot;Error: ${uiState.errorMessage}&quot;,</span>
+<span class="nc" id="L92">                            color = MaterialTheme.colorScheme.error,</span>
+<span class="nc" id="L93">                            style = MaterialTheme.typography.bodyLarge</span>
+                        )
+<span class="nc" id="L95">                        Spacer(modifier = Modifier.height(16.dp))</span>
+<span class="nc" id="L96">                        Button(onClick = { viewModel.loadSakeShopDetails(shopName) }) {</span>
+                            Text(&quot;Retry&quot;)
+                        }
+<span class="nc" id="L99">                    }</span>
+<span class="nc" id="L100">                }</span>
+            }
+
+<span class="nc bnc" id="L103" title="All 2 branches missed.">            uiState.sakeShop != null -&gt; {</span>
+<span class="nc" id="L104">                SakeShopDetailsContent(</span>
+<span class="nc" id="L105">                    sakeShop = uiState.sakeShop!!,</span>
+                    onMapsClick = { mapsLink -&gt;
+<span class="nc" id="L107">                        val intent = Intent(Intent.ACTION_VIEW, mapsLink.toUri())</span>
+<span class="nc" id="L108">                        context.startActivity(intent)</span>
+<span class="nc" id="L109">                    },</span>
+                    onWebsiteClick = { website -&gt;
+<span class="nc" id="L111">                        val intent = Intent(Intent.ACTION_VIEW, website.toUri())</span>
+<span class="nc" id="L112">                        context.startActivity(intent)</span>
+<span class="nc" id="L113">                    },</span>
+<span class="nc" id="L114">                    animatedVisibilityScope = animatedVisibilityScope</span>
+                )
+            }
+
+<span class="nc bnc" id="L118" title="All 2 branches missed.">            else -&gt; {</span>
+<span class="nc" id="L119">                Box(</span>
+<span class="nc" id="L120">                    modifier = Modifier</span>
+<span class="nc" id="L121">                        .fillMaxSize()</span>
+<span class="nc" id="L122">                        .padding(paddingValues),</span>
+<span class="nc" id="L123">                    contentAlignment = Alignment.Center</span>
+                ) {
+<span class="nc" id="L125">                    Text(&quot;Shop not found&quot;)</span>
+<span class="nc" id="L126">                }</span>
+            }
+<span class="nc" id="L128">        }</span>
+<span class="nc" id="L129">    }</span>
+<span class="nc" id="L130">}</span>
+
+@Composable
+private fun SharedTransitionScope.SakeShopDetailsContent(
+    sakeShop: SakeShop,
+<span class="nc bnc" id="L135" title="All 2 branches missed.">    modifier: Modifier = Modifier,</span>
+    onMapsClick: (String) -&gt; Unit,
+    onWebsiteClick: (String) -&gt; Unit,
+    animatedVisibilityScope: AnimatedVisibilityScope
+<span class="nc bnc" id="L139" title="All 2 branches missed.">) {</span>
+<span class="nc" id="L140">    Column(</span>
+<span class="nc" id="L141">        modifier = modifier</span>
+<span class="nc" id="L142">            .fillMaxSize()</span>
+<span class="nc" id="L143">            .verticalScroll(rememberScrollState()),</span>
+<span class="nc" id="L144">        verticalArrangement = Arrangement.spacedBy(16.dp)</span>
+    ) {
+        // Image Card
+<span class="nc" id="L147">        Column(</span>
+<span class="nc" id="L148">            modifier = Modifier.fillMaxWidth()</span>
+        ) {
+<span class="nc" id="L150">            AsyncImage(</span>
+<span class="nc" id="L151">                model = sakeShop.picture,</span>
+<span class="nc" id="L152">                contentDescription = sakeShop.name,</span>
+<span class="nc" id="L153">                modifier = Modifier</span>
+<span class="nc" id="L154">                    .fillMaxWidth()</span>
+<span class="nc" id="L155">                    .height(200.dp)</span>
+<span class="nc" id="L156">                    .sharedElement(</span>
+<span class="nc" id="L157">                        state = rememberSharedContentState(&quot;image/${sakeShop.name}&quot;),</span>
+<span class="nc" id="L158">                        animatedVisibilityScope = animatedVisibilityScope</span>
+                    )
+<span class="nc" id="L160">                    .background(MaterialTheme.colorScheme.surfaceVariant),</span>
+<span class="nc" id="L161">                contentScale = ContentScale.Crop</span>
+            )
+<span class="nc" id="L163">            Spacer(modifier = Modifier.height(16.dp))</span>
+<span class="nc" id="L164">            Text(</span>
+<span class="nc" id="L165">                text = sakeShop.name,</span>
+<span class="nc" id="L166">                style = MaterialTheme.typography.titleLarge,</span>
+<span class="nc" id="L167">                fontWeight = FontWeight.Bold,</span>
+<span class="nc" id="L168">                modifier = Modifier</span>
+<span class="nc" id="L169">                    .padding(16.dp)</span>
+<span class="nc" id="L170">                    .sharedElement(</span>
+<span class="nc" id="L171">                        state = rememberSharedContentState(&quot;text/${sakeShop.name}&quot;),</span>
+<span class="nc" id="L172">                        animatedVisibilityScope = animatedVisibilityScope</span>
+                    )
+            )
+<span class="nc" id="L175">        }</span>
+
+        // Info Card
+<span class="nc" id="L178">        Card(</span>
+<span class="nc" id="L179">            modifier = Modifier.fillMaxWidth(),</span>
+<span class="nc" id="L180">            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),</span>
+<span class="nc" id="L181">        ) {</span>
+<span class="nc bnc" id="L182" title="All 6 branches missed.">            Column(</span>
+<span class="nc" id="L183">                modifier = Modifier.padding(16.dp),</span>
+<span class="nc" id="L184">                verticalArrangement = Arrangement.spacedBy(12.dp)</span>
+            ) {
+
+<span class="nc" id="L187">                Row(</span>
+<span class="nc" id="L188">                    verticalAlignment = Alignment.CenterVertically,</span>
+<span class="nc" id="L189">                    horizontalArrangement = Arrangement.spacedBy(4.dp)</span>
+                ) {
+<span class="nc" id="L191">                    Icon(</span>
+<span class="nc" id="L192">                        imageVector = Icons.Default.Star,</span>
+<span class="nc" id="L193">                        contentDescription = &quot;Rating&quot;,</span>
+<span class="nc" id="L194">                        tint = Color(0xFFFFD700),</span>
+<span class="nc" id="L195">                        modifier = Modifier.size(20.dp)</span>
+                    )
+<span class="nc" id="L197">                    Text(</span>
+<span class="nc" id="L198">                        text = sakeShop.rating.toString(),</span>
+<span class="nc" id="L199">                        style = MaterialTheme.typography.titleMedium,</span>
+<span class="nc" id="L200">                        fontWeight = FontWeight.Medium</span>
+                    )
+<span class="nc" id="L202">                }</span>
+
+<span class="nc" id="L204">                Text(</span>
+<span class="nc" id="L205">                    text = sakeShop.description,</span>
+<span class="nc" id="L206">                    style = MaterialTheme.typography.bodyLarge,</span>
+<span class="nc" id="L207">                    color = MaterialTheme.colorScheme.onSurfaceVariant</span>
+                )
+<span class="nc" id="L209">            }</span>
+<span class="nc" id="L210">        }</span>
+
+        // Address Card
+<span class="nc" id="L213">        Card(</span>
+<span class="nc" id="L214">            modifier = Modifier.fillMaxWidth(),</span>
+<span class="nc" id="L215">            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),</span>
+<span class="nc" id="L216">        ) {</span>
+<span class="nc bnc" id="L217" title="All 6 branches missed.">            Column(</span>
+<span class="nc" id="L218">                modifier = Modifier.padding(16.dp),</span>
+<span class="nc" id="L219">                verticalArrangement = Arrangement.spacedBy(8.dp)</span>
+            ) {
+<span class="nc" id="L221">                Row(</span>
+<span class="nc" id="L222">                    verticalAlignment = Alignment.CenterVertically,</span>
+<span class="nc" id="L223">                    horizontalArrangement = Arrangement.spacedBy(8.dp)</span>
+                ) {
+<span class="nc" id="L225">                    Icon(</span>
+<span class="nc" id="L226">                        imageVector = Icons.Default.LocationOn,</span>
+<span class="nc" id="L227">                        contentDescription = &quot;Location&quot;,</span>
+<span class="nc" id="L228">                        tint = MaterialTheme.colorScheme.primary</span>
+                    )
+<span class="nc" id="L230">                    Text(</span>
+<span class="nc" id="L231">                        text = &quot;Address&quot;,</span>
+<span class="nc" id="L232">                        style = MaterialTheme.typography.titleMedium,</span>
+<span class="nc" id="L233">                        fontWeight = FontWeight.Bold</span>
+                    )
+<span class="nc" id="L235">                }</span>
+
+<span class="nc" id="L237">                Text(</span>
+<span class="nc" id="L238">                    text = sakeShop.address,</span>
+<span class="nc" id="L239">                    style = MaterialTheme.typography.bodyMedium,</span>
+<span class="nc" id="L240">                    color = MaterialTheme.colorScheme.onSurfaceVariant</span>
+                )
+
+<span class="nc" id="L243">                Text(</span>
+<span class="nc" id="L244">                    text = &quot;Coordinates: ${sakeShop.coordinates[0]}, ${sakeShop.coordinates[1]}&quot;,</span>
+<span class="nc" id="L245">                    style = MaterialTheme.typography.bodySmall,</span>
+<span class="nc" id="L246">                    color = MaterialTheme.colorScheme.onSurfaceVariant</span>
+                )
+<span class="nc" id="L248">            }</span>
+<span class="nc" id="L249">        }</span>
+
+        // Action Buttons
+<span class="nc" id="L252">        Row(</span>
+<span class="nc" id="L253">            modifier = Modifier.fillMaxWidth(),</span>
+<span class="nc" id="L254">            horizontalArrangement = Arrangement.spacedBy(12.dp)</span>
+        ) {
+<span class="nc" id="L256">            Button(</span>
+<span class="nc" id="L257">                onClick = { onMapsClick(sakeShop.googleMapsLink) },</span>
+<span class="nc" id="L258">                modifier = Modifier.weight(1f)</span>
+            ) {
+                Text(&quot;Open in Maps&quot;)
+            }
+
+<span class="nc" id="L263">            OutlinedButton(</span>
+<span class="nc" id="L264">                onClick = { onWebsiteClick(sakeShop.website) },</span>
+<span class="nc" id="L265">                modifier = Modifier.weight(1f)</span>
+            ) {
+                Text(&quot;Visit Website&quot;)
+            }
+<span class="nc" id="L269">        }</span>
+<span class="nc" id="L270">    }</span>
+<span class="nc" id="L271">}</span>
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

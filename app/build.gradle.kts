@@ -71,6 +71,7 @@ tasks.withType<Test> {
 }
 
 dependencies {
+    implementation(project(":design-system"))
     implementation(project(":domain"))
     implementation(project(":data"))
     implementation(project(":feat-sake-list"))

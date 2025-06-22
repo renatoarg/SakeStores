@@ -53,6 +53,7 @@ tasks.withType<Test> {
 }
 
 dependencies {
+    implementation(project(":design-system"))
     implementation(project(":domain"))
 
     implementation(libs.androidx.core.ktx)

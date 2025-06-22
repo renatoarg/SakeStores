@@ -17,7 +17,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.sakestores.android.ui.theme.SakeStoresTheme
+import com.sakestores.design_system.theme.SakePrimary
+import com.sakestores.design_system.theme.SakeStoresTheme
+import com.sakestores.design_system.utils.StatusBarColor
 import com.sakestores.feat_sake_details.ui.SakeShopDetailsScreen
 import com.sakestores.feat_sake_list.ui.SakeShopsListScreen
 import dagger.hilt.android.AndroidEntryPoint
@@ -29,10 +31,14 @@ import java.nio.charset.StandardCharsets
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             SakeStoresTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                StatusBarColor(
+                    color = SakePrimary,
+                    darkIcons = false
+                )
+                Scaffold(
+                    modifier = Modifier.fillMaxSize()) { innerPadding ->
                     SakeStoresApp(modifier = Modifier.padding(innerPadding))
                 }
             }
