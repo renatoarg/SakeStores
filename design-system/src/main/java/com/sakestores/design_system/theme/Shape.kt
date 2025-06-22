@@ -12,7 +12,6 @@ val SakeShapes = Shapes(
     extraLarge = RoundedCornerShape(28.dp)
 )
 
-// Shapes customizados para casos específicos
 object CustomShapes {
     val card = RoundedCornerShape(
         topStart = 16.dp,
@@ -22,6 +21,6 @@ object CustomShapes {
     )
 
     val button = RoundedCornerShape(12.dp)
-    val chip = RoundedCornerShape(50) // Totalmente arredondado
+    val chip = RoundedCornerShape(50)
     val dialog = RoundedCornerShape(24.dp)
 }

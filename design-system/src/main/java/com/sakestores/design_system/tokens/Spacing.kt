@@ -11,7 +11,6 @@ object SakeSpacing {
     val xxl = 48.dp
     val xxxl = 64.dp
 
-    // Spacing específicos
     val cardPadding = md
     val screenPadding = lg
     val itemSpacing = sm

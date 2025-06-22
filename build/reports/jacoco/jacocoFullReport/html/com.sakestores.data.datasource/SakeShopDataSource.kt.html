@@ -5,27 +5,29 @@ import android.content.Context
 import com.google.gson.reflect.TypeToken
 import com.sakestores.data.dto.SakeShopDto
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-<span class="fc" id="L10">class SakeShopDataSource @Inject constructor(</span>
-<span class="fc" id="L11">    @ApplicationContext private val context: Context,</span>
-<span class="fc" id="L12">    private val gson: Gson</span>
+<span class="fc" id="L12">class SakeShopDataSource @Inject constructor(</span>
+<span class="fc" id="L13">    @ApplicationContext private val context: Context,</span>
+<span class="fc" id="L14">    private val gson: Gson</span>
 ) {
 
-    suspend fun getSakeShops(): Result&lt;List&lt;SakeShopDto&gt;&gt; {
-<span class="fc" id="L16">        return try {</span>
-<span class="pc bpc" id="L17" title="1 of 2 branches missed.">            val json = context.assets.open(&quot;sake_shops.json&quot;).bufferedReader().use { it.readText() }</span>
-<span class="fc" id="L18">            val listType = object : TypeToken&lt;List&lt;SakeShopDto&gt;&gt;() {}.type</span>
-<span class="fc" id="L19">            val sakeShops = gson.fromJson&lt;List&lt;SakeShopDto&gt;&gt;(json, listType)</span>
-<span class="fc" id="L20">            Result.success(sakeShops)</span>
-<span class="fc" id="L21">        } catch (e: Exception) {</span>
-<span class="fc" id="L22">            Result.failure(e)</span>
+<span class="pc bpc" id="L17" title="1 of 2 branches missed.">    suspend fun getSakeShops(): Result&lt;List&lt;SakeShopDto&gt;&gt; = withContext(Dispatchers.IO) {</span>
+<span class="fc" id="L18">        try {</span>
+<span class="pc bpc" id="L19" title="1 of 2 branches missed.">            val json = context.assets.open(&quot;sake_shops.json&quot;).bufferedReader().use { it.readText() }</span>
+<span class="fc" id="L20">            val listType = object : TypeToken&lt;List&lt;SakeShopDto&gt;&gt;() {}.type</span>
+<span class="fc" id="L21">            val sakeShops = gson.fromJson&lt;List&lt;SakeShopDto&gt;&gt;(json, listType)</span>
+<span class="fc" id="L22">            Result.success(sakeShops)</span>
+<span class="fc" id="L23">        } catch (e: Exception) {</span>
+<span class="fc" id="L24">            Result.failure(e)</span>
         }
-    }
+<span class="fc" id="L26">    }</span>
 
-<span class="nc" id="L26">    suspend fun getSakeShopByName(name: String): Result&lt;SakeShopDto?&gt; {</span>
-<span class="pc bpc" id="L27" title="2 of 4 branches missed.">        return getSakeShops().mapCatching { shops -&gt;</span>
-<span class="fc bfc" id="L28" title="All 4 branches covered.">            shops.find { it.name == name }</span>
+<span class="fc" id="L28">    suspend fun getSakeShopByName(name: String): Result&lt;SakeShopDto?&gt; {</span>
+<span class="pc bpc" id="L29" title="2 of 4 branches missed.">        return getSakeShops().mapCatching { shops -&gt;</span>
+<span class="fc bfc" id="L30" title="All 4 branches covered.">            shops.find { it.name == name }</span>
         }
     }
 }

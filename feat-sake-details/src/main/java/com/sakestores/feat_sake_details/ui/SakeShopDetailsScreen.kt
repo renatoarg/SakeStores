@@ -34,13 +34,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.sakestores.feat_sake_details.presentation.SakeShopDetailsViewModel
 
 @Composable
 fun SharedTransitionScope.SakeShopDetailsScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
     shopName: String,
     onBackClick: () -> Unit,
-    viewModel: com.sakestores.feat_sake_details.presentation.SakeShopDetailsViewModel = hiltViewModel()
+    viewModel: SakeShopDetailsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
@@ -72,6 +73,7 @@ fun SharedTransitionScope.SakeShopDetailsScreen(
         }
     ) { paddingValues ->
         when {
+            // loading
             uiState.isLoading -> {
                 Box(
                     modifier = Modifier
@@ -82,7 +84,7 @@ fun SharedTransitionScope.SakeShopDetailsScreen(
                     CircularProgressIndicator()
                 }
             }
-
+            // error
             uiState.errorMessage != null -> {
                 Box(
                     modifier = Modifier
@@ -103,7 +105,7 @@ fun SharedTransitionScope.SakeShopDetailsScreen(
                     }
                 }
             }
-
+            // success
             uiState.sakeShop != null -> {
                 SakeShopDetailsContent(
                     modifier = Modifier.padding(paddingValues),
@@ -120,7 +122,7 @@ fun SharedTransitionScope.SakeShopDetailsScreen(
                     onBackClick = onBackClick
                 )
             }
-
+            // not found
             else -> {
                 Box(
                     modifier = Modifier
@@ -128,7 +130,7 @@ fun SharedTransitionScope.SakeShopDetailsScreen(
                         .padding(paddingValues),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text("Shop not found")
+                    Text("Ops... not found")
                 }
             }
         }

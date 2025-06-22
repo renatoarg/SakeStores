@@ -5,6 +5,8 @@ import android.content.Context
 import com.google.gson.reflect.TypeToken
 import com.sakestores.data.dto.SakeShopDto
 import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class SakeShopDataSource @Inject constructor(
@@ -12,8 +14,8 @@ class SakeShopDataSource @Inject constructor(
     private val gson: Gson
 ) {
 
-    suspend fun getSakeShops(): Result<List<SakeShopDto>> {
-        return try {
+    suspend fun getSakeShops(): Result<List<SakeShopDto>> = withContext(Dispatchers.IO) {
+        try {
             val json = context.assets.open("sake_shops.json").bufferedReader().use { it.readText() }
             val listType = object : TypeToken<List<SakeShopDto>>() {}.type
             val sakeShops = gson.fromJson<List<SakeShopDto>>(json, listType)

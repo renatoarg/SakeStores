@@ -12,7 +12,6 @@ object SakeElevation {
     val xxl = 16.dp
     val xxxl = 24.dp
 
-    // Elevações específicas
     val card = sm
     val floatingActionButton = lg
     val appBar = md

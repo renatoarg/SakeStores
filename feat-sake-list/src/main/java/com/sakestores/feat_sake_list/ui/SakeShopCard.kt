@@ -24,17 +24,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import coil.compose.AsyncImage
-import coil.request.CachePolicy
-import coil.request.ImageRequest
-import com.sakestores.design_system.R.*
 import com.sakestores.design_system.components.NetworkImageWithLoading
 import com.sakestores.design_system.theme.SakeStoresTheme
 import com.sakestores.domain.model.SakeShop
@@ -52,28 +45,6 @@ fun SharedTransitionScope.SakeShopCard(
             .padding(bottom = 16.dp)
             .clickable { onClick() },
     ) {
-//        AsyncImage(
-//            model = ImageRequest.Builder(LocalContext.current)
-//                .data(sakeShop.picture)
-//                .crossfade(true)
-//                .placeholder(drawable.placeholder2)
-//                .memoryCachePolicy(CachePolicy.ENABLED)
-//                .diskCachePolicy(CachePolicy.ENABLED)
-//                .fallback(drawable.placeholder2)
-//                .error(drawable.placeholder2)
-//                .build(),
-//            contentDescription = sakeShop.name,
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .height(160.dp)
-//                .padding(horizontal = 16.dp)
-//                .sharedElement(
-//                    state = rememberSharedContentState("image/${sakeShop.name}"),
-//                    animatedVisibilityScope = animatedVisibilityScope
-//                )
-//                .background(MaterialTheme.colorScheme.surfaceVariant),
-//            contentScale = ContentScale.Crop
-//        )
         NetworkImageWithLoading(
             imageUrl = sakeShop.picture,
             contentDescription = sakeShop.name,

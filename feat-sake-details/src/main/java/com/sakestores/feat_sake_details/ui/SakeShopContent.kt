@@ -44,6 +44,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.sakestores.design_system.components.NetworkImageWithLoading
 import com.sakestores.design_system.theme.SakeSecondary
 import com.sakestores.design_system.theme.SakeStoresTheme
 import com.sakestores.domain.model.SakeShop
@@ -67,18 +68,17 @@ fun SharedTransitionScope.SakeShopDetailsContent(
         Column(
             modifier = Modifier.fillMaxWidth()
         ) {
-            AsyncImage(
-                model = sakeShop.picture,
+            NetworkImageWithLoading(
+                imageUrl = sakeShop.picture,
                 contentDescription = sakeShop.name,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(300.dp)
+                    .background(MaterialTheme.colorScheme.surfaceVariant)
                     .sharedElement(
                         state = rememberSharedContentState("image/${sakeShop.name}"),
                         animatedVisibilityScope = animatedVisibilityScope
                     )
-                    .background(MaterialTheme.colorScheme.surfaceVariant),
-                contentScale = ContentScale.Crop
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
