@@ -29,6 +29,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
@@ -37,12 +38,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun SharedTransitionScope.SakeShopsListScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
     onSakeShopClick: (String) -&gt; Unit,
-<span class="nc" id="L40">    viewModel: com.sakestores.feat_sake_list.presentation.SakeShopsListViewModel = hiltViewModel()</span>
-<span class="nc bnc" id="L41" title="All 2 branches missed.">) {</span>
-<span class="nc" id="L42">    val uiState by viewModel.uiState.collectAsState()</span>
+<span class="nc" id="L41">    viewModel: com.sakestores.feat_sake_list.presentation.SakeShopsListViewModel = hiltViewModel()</span>
+<span class="nc bnc" id="L42" title="All 2 branches missed.">) {</span>
+<span class="nc" id="L43">    val uiState by viewModel.uiState.collectAsState()</span>
 
-<span class="nc bnc" id="L44" title="All 4 branches missed.">    Scaffold(</span>
-<span class="nc" id="L45">        contentWindowInsets = WindowInsets(0),</span>
+<span class="nc bnc" id="L45" title="All 4 branches missed.">    Scaffold(</span>
+<span class="nc" id="L46">        modifier = Modifier.testTag(&quot;main_screen&quot;),</span>
+<span class="nc" id="L47">        contentWindowInsets = WindowInsets(0),</span>
         topBar = {
             TopAppBar(
                 title = { Text(&quot;Sake Stores&quot;) },
@@ -52,59 +54,67 @@ fun SharedTransitionScope.SakeShopsListScreen(
                 )
             )
         }
-<span class="nc" id="L55">    ) { paddingValues -&gt;</span>
-<span class="nc bnc" id="L56" title="All 6 branches missed.">        when {</span>
+<span class="nc" id="L57">    ) { paddingValues -&gt;</span>
+<span class="nc bnc" id="L58" title="All 6 branches missed.">        when {</span>
             // loading
-<span class="nc bnc" id="L58" title="All 2 branches missed.">            uiState.isLoading -&gt; {</span>
-<span class="nc" id="L59">                Box(</span>
-<span class="nc" id="L60">                    modifier = Modifier</span>
-<span class="nc" id="L61">                        .fillMaxSize()</span>
-<span class="nc" id="L62">                        .padding(paddingValues),</span>
-<span class="nc" id="L63">                    contentAlignment = Alignment.Center</span>
+<span class="nc bnc" id="L60" title="All 2 branches missed.">            uiState.isLoading -&gt; {</span>
+<span class="nc" id="L61">                Box(</span>
+<span class="nc" id="L62">                    modifier = Modifier</span>
+<span class="nc" id="L63">                        .fillMaxSize()</span>
+<span class="nc" id="L64">                        .padding(paddingValues)</span>
+<span class="nc" id="L65">                        .testTag(&quot;loading_state&quot;),</span>
+<span class="nc" id="L66">                    contentAlignment = Alignment.Center</span>
                 ) {
-<span class="nc" id="L65">                    CircularProgressIndicator()</span>
-<span class="nc" id="L66">                }</span>
+<span class="nc" id="L68">                    CircularProgressIndicator()</span>
+<span class="nc" id="L69">                }</span>
             }
             // error
-<span class="nc bnc" id="L69" title="All 2 branches missed.">            uiState.errorMessage != null -&gt; {</span>
-<span class="nc" id="L70">                Box(</span>
-<span class="nc" id="L71">                    modifier = Modifier</span>
-<span class="nc" id="L72">                        .fillMaxSize()</span>
-<span class="nc" id="L73">                        .padding(paddingValues),</span>
-<span class="nc" id="L74">                    contentAlignment = Alignment.Center</span>
+<span class="nc bnc" id="L72" title="All 2 branches missed.">            uiState.errorMessage != null -&gt; {</span>
+<span class="nc" id="L73">                Box(</span>
+<span class="nc" id="L74">                    modifier = Modifier</span>
+<span class="nc" id="L75">                        .fillMaxSize()</span>
+<span class="nc" id="L76">                        .padding(paddingValues)</span>
+<span class="nc" id="L77">                        .testTag(&quot;error_state&quot;),</span>
+<span class="nc" id="L78">                    contentAlignment = Alignment.Center</span>
                 ) {
-<span class="nc" id="L76">                    Column(horizontalAlignment = Alignment.CenterHorizontally) {</span>
-<span class="nc" id="L77">                        Text(</span>
-<span class="nc" id="L78">                            text = &quot;Error: ${uiState.errorMessage}&quot;,</span>
-<span class="nc" id="L79">                            color = MaterialTheme.colorScheme.error,</span>
-<span class="nc" id="L80">                            style = MaterialTheme.typography.bodyLarge</span>
+<span class="nc" id="L80">                    Column(horizontalAlignment = Alignment.CenterHorizontally) {</span>
+<span class="nc" id="L81">                        Text(</span>
+<span class="nc" id="L82">                            text = &quot;Error: ${uiState.errorMessage}&quot;,</span>
+<span class="nc" id="L83">                            color = MaterialTheme.colorScheme.error,</span>
+<span class="nc" id="L84">                            style = MaterialTheme.typography.bodyLarge,</span>
+<span class="nc" id="L85">                            modifier = Modifier.testTag(&quot;error_message&quot;)</span>
                         )
-<span class="nc" id="L82">                        Spacer(modifier = Modifier.height(16.dp))</span>
-<span class="nc" id="L83">                        Button(onClick = { viewModel.loadSakeShops() }) {</span>
+<span class="nc" id="L87">                        Spacer(modifier = Modifier.height(16.dp))</span>
+<span class="nc" id="L88">                        Button(</span>
+<span class="nc" id="L89">                            onClick = { viewModel.loadSakeShops() },</span>
+<span class="nc" id="L90">                            modifier = Modifier.testTag(&quot;retry_button&quot;)</span>
+                        ) {
                             Text(&quot;Retry&quot;)
                         }
-<span class="nc" id="L86">                    }</span>
-<span class="nc" id="L87">                }</span>
+<span class="nc" id="L94">                    }</span>
+<span class="nc" id="L95">                }</span>
             }
             // success
-<span class="nc bnc" id="L90" title="All 2 branches missed.">            else -&gt; {</span>
-<span class="nc" id="L91">                LazyColumn(</span>
-<span class="nc" id="L92">                    modifier = Modifier</span>
-<span class="nc" id="L93">                        .fillMaxSize()</span>
-<span class="nc" id="L94">                        .padding(paddingValues),</span>
-<span class="nc" id="L95">                    contentPadding = PaddingValues(top = 16.dp),</span>
-<span class="nc" id="L96">                    verticalArrangement = Arrangement.spacedBy(12.dp)</span>
+<span class="nc bnc" id="L98" title="All 2 branches missed.">            else -&gt; {</span>
+<span class="nc" id="L99">                LazyColumn(</span>
+<span class="nc" id="L100">                    modifier = Modifier</span>
+<span class="nc" id="L101">                        .fillMaxSize()</span>
+<span class="nc" id="L102">                        .padding(paddingValues)</span>
+<span class="nc" id="L103">                        .testTag(&quot;success_state&quot;),</span>
+<span class="nc" id="L104">                    contentPadding = PaddingValues(top = 16.dp),</span>
+<span class="nc" id="L105">                    verticalArrangement = Arrangement.spacedBy(12.dp)</span>
                 ) {
-<span class="nc" id="L98">                    items(uiState.sakeShops) { sakeShop -&gt;</span>
+<span class="nc" id="L107">                    items(uiState.sakeShops) { sakeShop -&gt;</span>
                         SakeShopCard(
                             animatedVisibilityScope = animatedVisibilityScope,
                             sakeShop = sakeShop,
-<span class="nc" id="L102">                            onClick = { onSakeShopClick(sakeShop.name) },</span>
+<span class="nc" id="L111">                            onClick = { onSakeShopClick(sakeShop.name) },</span>
+                            modifier = Modifier.testTag(&quot;shop_item&quot;)
                         )
                     }
-<span class="nc" id="L105">                }</span>
+<span class="nc" id="L115">                }</span>
             }
-<span class="nc" id="L107">        }</span>
-<span class="nc" id="L108">    }</span>
-<span class="nc" id="L109">}</span>
+<span class="nc" id="L117">        }</span>
+<span class="nc" id="L118">    }</span>
+<span class="nc" id="L119">}</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

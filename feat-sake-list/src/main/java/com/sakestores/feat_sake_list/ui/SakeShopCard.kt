@@ -37,10 +37,11 @@ import com.sakestores.domain.model.SakeShop
 fun SharedTransitionScope.SakeShopCard(
     sakeShop: SakeShop,
     onClick: () -> Unit,
-    animatedVisibilityScope: AnimatedVisibilityScope
+    animatedVisibilityScope: AnimatedVisibilityScope,
+    modifier: Modifier
 ) {
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .padding(bottom = 16.dp)
             .clickable { onClick() },
@@ -127,7 +128,8 @@ private fun SakeShopCardPreview() {
                 this@SharedTransitionLayout.SakeShopCard(
                     sakeShop = sampleSakeShop(),
                     onClick = {  },
-                    animatedVisibilityScope = this
+                    animatedVisibilityScope = this,
+                    modifier = Modifier
                 )
             }
         }

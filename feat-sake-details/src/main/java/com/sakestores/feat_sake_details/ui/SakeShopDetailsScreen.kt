@@ -31,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -51,6 +52,7 @@ fun SharedTransitionScope.SakeShopDetailsScreen(
     }
 
     Scaffold(
+        modifier = Modifier.testTag("details_screen"),
         topBar = {
             TopAppBar(
                 title = { },
@@ -60,7 +62,8 @@ fun SharedTransitionScope.SakeShopDetailsScreen(
                 ),
                 navigationIcon = {
                     IconButton(
-                        onClick = { onBackClick() }
+                        onClick = { onBackClick() },
+                        modifier = Modifier.testTag("back_button")
                     ) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,

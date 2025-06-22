@@ -31,6 +31,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -41,99 +42,101 @@ fun SharedTransitionScope.SakeShopDetailsScreen(
     animatedVisibilityScope: AnimatedVisibilityScope,
     shopName: String,
     onBackClick: () -&gt; Unit,
-<span class="nc" id="L44">    viewModel: SakeShopDetailsViewModel = hiltViewModel()</span>
-<span class="nc bnc" id="L45" title="All 2 branches missed.">) {</span>
-<span class="nc" id="L46">    val uiState by viewModel.uiState.collectAsState()</span>
-<span class="nc" id="L47">    val context = LocalContext.current</span>
+<span class="nc" id="L45">    viewModel: SakeShopDetailsViewModel = hiltViewModel()</span>
+<span class="nc bnc" id="L46" title="All 2 branches missed.">) {</span>
+<span class="nc" id="L47">    val uiState by viewModel.uiState.collectAsState()</span>
+<span class="nc" id="L48">    val context = LocalContext.current</span>
 
-<span class="nc bnc" id="L49" title="All 2 branches missed.">    LaunchedEffect(shopName) {</span>
-<span class="nc" id="L50">        viewModel.loadSakeShopDetails(shopName)</span>
-<span class="nc" id="L51">    }</span>
+<span class="nc bnc" id="L50" title="All 2 branches missed.">    LaunchedEffect(shopName) {</span>
+<span class="nc" id="L51">        viewModel.loadSakeShopDetails(shopName)</span>
+<span class="nc" id="L52">    }</span>
 
-<span class="nc bnc" id="L53" title="All 4 branches missed.">    Scaffold(</span>
-<span class="nc" id="L54">        topBar = {</span>
-<span class="nc bnc" id="L55" title="All 8 branches missed.">            TopAppBar(</span>
+<span class="nc bnc" id="L54" title="All 4 branches missed.">    Scaffold(</span>
+<span class="nc" id="L55">        modifier = Modifier.testTag(&quot;details_screen&quot;),</span>
+<span class="nc" id="L56">        topBar = {</span>
+<span class="nc bnc" id="L57" title="All 8 branches missed.">            TopAppBar(</span>
                 title = { },
-<span class="nc" id="L57">                colors = TopAppBarDefaults.topAppBarColors(</span>
-<span class="nc" id="L58">                    containerColor = MaterialTheme.colorScheme.primary,</span>
-<span class="nc" id="L59">                    titleContentColor = MaterialTheme.colorScheme.onPrimary</span>
+<span class="nc" id="L59">                colors = TopAppBarDefaults.topAppBarColors(</span>
+<span class="nc" id="L60">                    containerColor = MaterialTheme.colorScheme.primary,</span>
+<span class="nc" id="L61">                    titleContentColor = MaterialTheme.colorScheme.onPrimary</span>
                 ),
-<span class="nc" id="L61">                navigationIcon = {</span>
-<span class="nc bnc" id="L62" title="All 8 branches missed.">                    IconButton(</span>
-<span class="nc" id="L63">                        onClick = { onBackClick() }</span>
+<span class="nc" id="L63">                navigationIcon = {</span>
+<span class="nc bnc" id="L64" title="All 8 branches missed.">                    IconButton(</span>
+<span class="nc" id="L65">                        onClick = { onBackClick() },</span>
+<span class="nc" id="L66">                        modifier = Modifier.testTag(&quot;back_button&quot;)</span>
                     ) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
                             contentDescription = &quot;back&quot;,
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
-<span class="nc" id="L70">                    }</span>
-<span class="nc" id="L71">                }</span>
-<span class="nc" id="L72">            )</span>
-<span class="nc" id="L73">        }</span>
-<span class="nc" id="L74">    ) { paddingValues -&gt;</span>
-<span class="nc bnc" id="L75" title="All 6 branches missed.">        when {</span>
+<span class="nc" id="L73">                    }</span>
+<span class="nc" id="L74">                }</span>
+<span class="nc" id="L75">            )</span>
+<span class="nc" id="L76">        }</span>
+<span class="nc" id="L77">    ) { paddingValues -&gt;</span>
+<span class="nc bnc" id="L78" title="All 6 branches missed.">        when {</span>
             // loading
-<span class="nc bnc" id="L77" title="All 2 branches missed.">            uiState.isLoading -&gt; {</span>
-<span class="nc" id="L78">                Box(</span>
-<span class="nc" id="L79">                    modifier = Modifier</span>
-<span class="nc" id="L80">                        .fillMaxSize()</span>
-<span class="nc" id="L81">                        .padding(paddingValues),</span>
-<span class="nc" id="L82">                    contentAlignment = Alignment.Center</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">            uiState.isLoading -&gt; {</span>
+<span class="nc" id="L81">                Box(</span>
+<span class="nc" id="L82">                    modifier = Modifier</span>
+<span class="nc" id="L83">                        .fillMaxSize()</span>
+<span class="nc" id="L84">                        .padding(paddingValues),</span>
+<span class="nc" id="L85">                    contentAlignment = Alignment.Center</span>
                 ) {
-<span class="nc" id="L84">                    CircularProgressIndicator()</span>
-<span class="nc" id="L85">                }</span>
+<span class="nc" id="L87">                    CircularProgressIndicator()</span>
+<span class="nc" id="L88">                }</span>
             }
             // error
-<span class="nc bnc" id="L88" title="All 2 branches missed.">            uiState.errorMessage != null -&gt; {</span>
-<span class="nc" id="L89">                Box(</span>
-<span class="nc" id="L90">                    modifier = Modifier</span>
-<span class="nc" id="L91">                        .fillMaxSize()</span>
-<span class="nc" id="L92">                        .padding(paddingValues),</span>
-<span class="nc" id="L93">                    contentAlignment = Alignment.Center</span>
+<span class="nc bnc" id="L91" title="All 2 branches missed.">            uiState.errorMessage != null -&gt; {</span>
+<span class="nc" id="L92">                Box(</span>
+<span class="nc" id="L93">                    modifier = Modifier</span>
+<span class="nc" id="L94">                        .fillMaxSize()</span>
+<span class="nc" id="L95">                        .padding(paddingValues),</span>
+<span class="nc" id="L96">                    contentAlignment = Alignment.Center</span>
                 ) {
-<span class="nc" id="L95">                    Column(horizontalAlignment = Alignment.CenterHorizontally) {</span>
-<span class="nc" id="L96">                        Text(</span>
-<span class="nc" id="L97">                            text = &quot;Error: ${uiState.errorMessage}&quot;,</span>
-<span class="nc" id="L98">                            color = MaterialTheme.colorScheme.error,</span>
-<span class="nc" id="L99">                            style = MaterialTheme.typography.bodyLarge</span>
+<span class="nc" id="L98">                    Column(horizontalAlignment = Alignment.CenterHorizontally) {</span>
+<span class="nc" id="L99">                        Text(</span>
+<span class="nc" id="L100">                            text = &quot;Error: ${uiState.errorMessage}&quot;,</span>
+<span class="nc" id="L101">                            color = MaterialTheme.colorScheme.error,</span>
+<span class="nc" id="L102">                            style = MaterialTheme.typography.bodyLarge</span>
                         )
-<span class="nc" id="L101">                        Spacer(modifier = Modifier.height(16.dp))</span>
-<span class="nc" id="L102">                        Button(onClick = { viewModel.loadSakeShopDetails(shopName) }) {</span>
+<span class="nc" id="L104">                        Spacer(modifier = Modifier.height(16.dp))</span>
+<span class="nc" id="L105">                        Button(onClick = { viewModel.loadSakeShopDetails(shopName) }) {</span>
                             Text(&quot;Retry&quot;)
                         }
-<span class="nc" id="L105">                    }</span>
-<span class="nc" id="L106">                }</span>
+<span class="nc" id="L108">                    }</span>
+<span class="nc" id="L109">                }</span>
             }
             // success
-<span class="nc bnc" id="L109" title="All 2 branches missed.">            uiState.sakeShop != null -&gt; {</span>
-<span class="nc" id="L110">                SakeShopDetailsContent(</span>
-<span class="nc" id="L111">                    modifier = Modifier.padding(paddingValues),</span>
-<span class="nc" id="L112">                    sakeShop = uiState.sakeShop!!,</span>
+<span class="nc bnc" id="L112" title="All 2 branches missed.">            uiState.sakeShop != null -&gt; {</span>
+<span class="nc" id="L113">                SakeShopDetailsContent(</span>
+<span class="nc" id="L114">                    modifier = Modifier.padding(paddingValues),</span>
+<span class="nc" id="L115">                    sakeShop = uiState.sakeShop!!,</span>
                     onMapsClick = { mapsLink -&gt;
-<span class="nc" id="L114">                        val intent = Intent(Intent.ACTION_VIEW, mapsLink.toUri())</span>
-<span class="nc" id="L115">                        context.startActivity(intent)</span>
-<span class="nc" id="L116">                    },</span>
+<span class="nc" id="L117">                        val intent = Intent(Intent.ACTION_VIEW, mapsLink.toUri())</span>
+<span class="nc" id="L118">                        context.startActivity(intent)</span>
+<span class="nc" id="L119">                    },</span>
                     onWebsiteClick = { website -&gt;
-<span class="nc" id="L118">                        val intent = Intent(Intent.ACTION_VIEW, website.toUri())</span>
-<span class="nc" id="L119">                        context.startActivity(intent)</span>
-<span class="nc" id="L120">                    },</span>
-<span class="nc" id="L121">                    animatedVisibilityScope = animatedVisibilityScope,</span>
-<span class="nc" id="L122">                    onBackClick = onBackClick</span>
+<span class="nc" id="L121">                        val intent = Intent(Intent.ACTION_VIEW, website.toUri())</span>
+<span class="nc" id="L122">                        context.startActivity(intent)</span>
+<span class="nc" id="L123">                    },</span>
+<span class="nc" id="L124">                    animatedVisibilityScope = animatedVisibilityScope,</span>
+<span class="nc" id="L125">                    onBackClick = onBackClick</span>
                 )
             }
             // not found
-<span class="nc bnc" id="L126" title="All 2 branches missed.">            else -&gt; {</span>
-<span class="nc" id="L127">                Box(</span>
-<span class="nc" id="L128">                    modifier = Modifier</span>
-<span class="nc" id="L129">                        .fillMaxSize()</span>
-<span class="nc" id="L130">                        .padding(paddingValues),</span>
-<span class="nc" id="L131">                    contentAlignment = Alignment.Center</span>
+<span class="nc bnc" id="L129" title="All 2 branches missed.">            else -&gt; {</span>
+<span class="nc" id="L130">                Box(</span>
+<span class="nc" id="L131">                    modifier = Modifier</span>
+<span class="nc" id="L132">                        .fillMaxSize()</span>
+<span class="nc" id="L133">                        .padding(paddingValues),</span>
+<span class="nc" id="L134">                    contentAlignment = Alignment.Center</span>
                 ) {
-<span class="nc" id="L133">                    Text(&quot;Ops... not found&quot;)</span>
-<span class="nc" id="L134">                }</span>
+<span class="nc" id="L136">                    Text(&quot;Ops... not found&quot;)</span>
+<span class="nc" id="L137">                }</span>
             }
-<span class="nc" id="L136">        }</span>
-<span class="nc" id="L137">    }</span>
-<span class="nc" id="L138">}</span>
+<span class="nc" id="L139">        }</span>
+<span class="nc" id="L140">    }</span>
+<span class="nc" id="L141">}</span>
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

@@ -53,11 +53,16 @@ def coverageClassDirs = fileTree(
 def coverageExecutionData = fileTree(
         dir: '.',
         includes: [
+                // unit tests
                 'data/build/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec',
                 'domain/build/jacoco/test.exec',
                 'feat-sake-list/build/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec',
                 'feat-sake-details/build/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec',
-                'app/build/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec'
+                'app/build/outputs/unit_test_code_coverage/debugUnitTest/testDebugUnitTest.exec',
+                // ui tests
+                'app/build/outputs/coverage/**/*.ec',
+                'feat-sake-list/build/outputs/coverage/**/*.ec',
+                'feat-sake-details/build/outputs/coverage/**/*.ec'
         ]
 )
 
@@ -65,11 +70,15 @@ task jacocoFullReport(type: JacocoReport, group: 'verification') {
     description = 'Generate Jacoco coverage reports for all modules.'
 
     dependsOn = [
+            // unit tests
             ':data:testDebugUnitTest',
             ':domain:test',
             ':feat-sake-list:testDebugUnitTest',
             ':feat-sake-details:testDebugUnitTest',
-            ':app:testDebugUnitTest'
+            ':app:testDebugUnitTest',
+            // jacoco
+            ':app:connectedDebugAndroidTest',
+            ':app:createDebugCoverageReport'
     ]
 
     reports {

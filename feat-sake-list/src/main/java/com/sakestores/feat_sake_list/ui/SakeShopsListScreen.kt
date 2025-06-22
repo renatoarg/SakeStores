@@ -29,6 +29,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 
@@ -42,6 +43,7 @@ fun SharedTransitionScope.SakeShopsListScreen(
     val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(
+        modifier = Modifier.testTag("main_screen"),
         contentWindowInsets = WindowInsets(0),
         topBar = {
             TopAppBar(
@@ -59,7 +61,8 @@ fun SharedTransitionScope.SakeShopsListScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(paddingValues),
+                        .padding(paddingValues)
+                        .testTag("loading_state"),
                     contentAlignment = Alignment.Center
                 ) {
                     CircularProgressIndicator()
@@ -70,17 +73,22 @@ fun SharedTransitionScope.SakeShopsListScreen(
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(paddingValues),
+                        .padding(paddingValues)
+                        .testTag("error_state"),
                     contentAlignment = Alignment.Center
                 ) {
                     Column(horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(
                             text = "Error: ${uiState.errorMessage}",
                             color = MaterialTheme.colorScheme.error,
-                            style = MaterialTheme.typography.bodyLarge
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.testTag("error_message")
                         )
                         Spacer(modifier = Modifier.height(16.dp))
-                        Button(onClick = { viewModel.loadSakeShops() }) {
+                        Button(
+                            onClick = { viewModel.loadSakeShops() },
+                            modifier = Modifier.testTag("retry_button")
+                        ) {
                             Text("Retry")
                         }
                     }
@@ -91,7 +99,8 @@ fun SharedTransitionScope.SakeShopsListScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(paddingValues),
+                        .padding(paddingValues)
+                        .testTag("success_state"),
                     contentPadding = PaddingValues(top = 16.dp),
                     verticalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
@@ -100,6 +109,7 @@ fun SharedTransitionScope.SakeShopsListScreen(
                             animatedVisibilityScope = animatedVisibilityScope,
                             sakeShop = sakeShop,
                             onClick = { onSakeShopClick(sakeShop.name) },
+                            modifier = Modifier.testTag("shop_item")
                         )
                     }
                 }

@@ -7,3 +7,10 @@ Project configuration:
 - Gradle Wrapper: 8.11.1
 - Android Gradle Plugin (AGP): 8.2.0
 
+Testing
+The project is covered with unit and instrumented tests, to execute them use Jacoco:
+ ./gradlew jacocoFullReport
+
+Then check the Jacoco test report at
+/build/reports/jacoco/jacocoFullReport/html/index.html
+
