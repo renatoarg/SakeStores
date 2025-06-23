@@ -75,7 +75,7 @@ open build/reports/jacoco/jacocoFullReport/html/index.html
 
 ### View Documentation
 ```bash
-open build/dokka/html/index.html
+open docs/index.html
 ```
 
 ---
